@@ -1,0 +1,18 @@
+label{
+    font-weight: 600;
+}
+
+th{
+    white-space: nowrap;
+}
+.records {
+    overflow: auto;
+}
+
+.custom_button{
+    color: red !important;
+    border-top: none;
+    border-left: none;
+    background-color: #e4eaec;
+    border-color: #e4eaec;
+}

@@ -1,0 +1,218 @@
+function get_sensor_name($zone, $panelname, $con, $alarm)
+{
+
+    $panel_name = $panelname;
+    $paramater = 'SensorName';
+    $sql = "";
+    $_change = 0;
+    if ($panel_name == 'smarti_hdfc32') {
+        if (substr($alarm, -1) == 'R' || substr($alarm, -1) == 'N') {
+            $_change = 1;
+            $remain_char = substr($alarm, 0, -1);
+            $sql = mysqli_query($con, "select $paramater from comfort where ZONE='" . $zone . "' AND SCODE LIKE '" . $remain_char . "%'");
+        } else {
+            $sql = mysqli_query($con, "select $paramater from comfort where ZONE='" . $zone . "' AND SCODE='" . $alarm . "'");
+        }
+    }
+    if ($panel_name == 'comfort') {
+        if (substr($alarm, -1) == 'R' || substr($alarm, -1) == 'N') {
+            $_change = 1;
+            $remain_char = substr($alarm, 0, -1);
+            $sql = mysqli_query($con, "select $paramater from comfort where ZONE='" . $zone . "' AND SCODE LIKE '" . $remain_char . "%'");
+        } else {
+            $sql = mysqli_query($con, "select $paramater from comfort where ZONE='" . $zone . "' AND SCODE='" . $alarm . "'");
+        }
+    }
+    if ($panel_name == 'comfort_hdfc') {
+        if (substr($alarm, -1) == 'R' || substr($alarm, -1) == 'N') {
+            $_change = 1;
+            $remain_char = substr($alarm, 0, -1);
+            $sql = mysqli_query($con, "select $paramater from comfort_hdfc where ZONE='" . $zone . "' AND SCODE LIKE '" . $remain_char . "%'");
+        } else {
+            $sql = mysqli_query($con, "select $paramater from comfort_hdfc where ZONE='" . $zone . "' AND SCODE='" . $alarm . "'");
+        }
+    }
+    if ($panel_name == 'rass_boi') {
+        if (substr($alarm, -1) == 'R') {
+            $_change = 1;
+            $remain_char = substr($alarm, 0, -1);
+            $sql = mysqli_query($con, "select $paramater from rass_boi where ZONE='" . $zone . "' AND SCODE LIKE '" . $remain_char . "%'");
+        } else {
+            $sql = mysqli_query($con, "select $paramater from rass_boi where ZONE='" . $zone . "' AND SCODE='" . $alarm . "'");
+        }
+    }
+    if ($panel_name == 'rass_pnb') {
+        if (substr($alarm, -1) == 'R') {
+            $_change = 1;
+            $remain_char = substr($alarm, 0, -1);
+            $sql = mysqli_query($con, "select $paramater from rass_pnb where ZONE='" . $zone . "' AND SCODE LIKE '" . $remain_char . "%'");
+        } else {
+            $sql = mysqli_query($con, "select $paramater from rass_pnb where ZONE='" . $zone . "' AND SCODE='" . $alarm . "'");
+        }
+    }
+    if ($panel_name == 'smarti_boi') {
+        if (substr($alarm, -1) == 'R') {
+            $_change = 1;
+            $remain_char = substr($alarm, 0, -1);
+            $sql = mysqli_query($con, "select $paramater from smarti_boi where ZONE='" . $zone . "' AND SCODE LIKE '" . $remain_char . "%'");
+        } else {
+            $sql = mysqli_query($con, "select $paramater from smarti_boi where ZONE='" . $zone . "' AND SCODE='" . $alarm . "'");
+        }
+    }
+    if ($panel_name == 'smarti_pnb') {
+        if (substr($alarm, -1) == 'R') {
+            $_change = 1;
+            $remain_char = substr($alarm, 0, -1);
+            $sql = mysqli_query($con, "select $paramater from smarti_pnb where ZONE='" . $zone . "' AND SCODE LIKE '" . $remain_char . "%'");
+        } else {
+            $sql = mysqli_query($con, "select $paramater from smarti_pnb where ZONE='" . $zone . "' AND SCODE='" . $alarm . "'");
+        }
+    }
+    if ($panel_name == 'smarti_hdfc32') {
+        if (substr($alarm, -1) == 'R') {
+            $_change = 1;
+            $remain_char = substr($alarm, 0, -1);
+            $sql = mysqli_query($con, "select $paramater from smarti_hdfc32 where ZONE='" . $zone . "' AND SCODE LIKE '" . $remain_char . "%'");
+        } else {
+            $sql = mysqli_query($con, "select $paramater from smarti_hdfc32 where ZONE='" . $zone . "' AND SCODE='" . $alarm . "'");
+        }
+    }
+
+    if ($panel_name == 'comfort') {
+        $sql = mysqli_query($con, "select $paramater from comfort where ZONE='" . $zone . "' AND SCODE='" . $alarm . "' ");
+    }
+    if ($panel_name == 'RASS') {
+        $sql = mysqli_query($con, "select $paramater from rass where ZONE='" . $zone . "' AND SCODE='" . $alarm . "'");
+    }
+    if ($panel_name == 'rass_cloud') {
+        $sql = mysqli_query($con, "select $paramater from rass_cloud where ZONE='" . $zone . "' ");
+    }
+    if ($panel_name == 'rass_cloudnew') {
+        $sql = mysqli_query($con, "select $paramater from rass_cloudnew where ZONE='" . $zone . "' ");
+    }
+    if ($panel_name == 'rass_sbi') {
+        $sql = mysqli_query($con, "select $paramater from rass_sbi where ZONE='" . $zone . "'");
+    }
+    if ($panel_name == 'SEC') {
+        $sql = mysqli_query($con, "select $paramater from securico where ZONE='" . $zone . "' ");
+    }
+    if ($panel_name == 'securico_gx4816') {
+        $sql = mysqli_query($con, "select $paramater from securico_gx4816 where ZONE='" . $zone . "' ");
+    }
+    if ($panel_name == 'sec_sbi') {
+        $sql = mysqli_query($con, "select $paramater from sec_sbi where ZONE='" . $zone . "' ");
+    }
+    if ($panel_name == 'Raxx') {
+        $sql = mysqli_query($con, "select $paramater from raxx where ZONE='" . $zone . "' ");
+    }
+    if ($panel_name == 'SMART -I') {
+        $sql = mysqli_query($con, "select $paramater from smarti where ZONE='" . $zone . "' ");
+    }
+    if ($panel_name == 'SMART-IN') {
+        $sql = mysqli_query($con, "select $paramater from smartinew where ZONE='" . $zone . "' ");
+    }
+
+
+
+
+    if ($panel_name == "securico_hdfceuronet") {
+        $sql1 = mysqli_query($con, "select $paramater from securico_hdfceuronet where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "mspl_hdfcadvait32") {
+        $sql1 = mysqli_query($con, "select $paramater from mspl_hdfcadvait32 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "mspl_idfceuronetadvait32") {
+        $sql1 = mysqli_query($con, "select $paramater from mspl_idfceuronetadvait32 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "rass_hdfceuronetsap500") {
+        $sql1 = mysqli_query($con, "select $paramater from rass_hdfceuronetsap500 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "rass_india1sap500") {
+        $sql1 = mysqli_query($con, "select $paramater from rass_india1sap500 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "RAXX_32Z-G1") {
+        $sql1 = mysqli_query($con, "select $paramater from RAXX_32Z-G1 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "raxx_ccil32zg1") {
+        $sql1 = mysqli_query($con, "select $paramater from raxx_ccil32zg1 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "raxx_ccilrtaapg1v2") {
+        $sql1 = mysqli_query($con, "select $paramater from raxx_ccilrtaapg1v2 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "raxx_hdfceuronet32zg1") {
+        $sql1 = mysqli_query($con, "select $paramater from raxx_hdfceuronet32zg1 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "raxx_india132zg1") {
+        $sql1 = mysqli_query($con, "select $paramater from raxx_india132zg1 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "raxx_india1rtaapg1v2") {
+        $sql1 = mysqli_query($con, "select $paramater from raxx_india1rtaapg1v2 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "raxx_kotakeuronet32zg1") {
+        $sql1 = mysqli_query($con, "select $paramater from raxx_kotakeuronet32zg1 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "RT-AAP-G1(V2)") {
+        $sql1 = mysqli_query($con, "select $paramater from RT-AAP-G1(V2) where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "SEC-GX4816") {
+        $sql1 = mysqli_query($con, "select $paramater from SEC-GX4816 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "securico_ccil") {
+        $sql1 = mysqli_query($con, "select $paramater from securico_ccil where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "securico_cnspoc") {
+        $sql1 = mysqli_query($con, "select $paramater from securico_cnspoc where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "securico_gx4816") {
+        $sql1 = mysqli_query($con, "select $paramater from securico_gx4816 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "securico_kjsb") {
+        $sql1 = mysqli_query($con, "select $paramater from securico_kjsb where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "SMART-I(04)") {
+        $sql1 = mysqli_query($con, "select $paramater from SMART-I(04) where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "SMART-I(16)") {
+        $sql1 = mysqli_query($con, "select $paramater from SMART-I(16) where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "SMART-I(32)") {
+        $sql1 = mysqli_query($con, "select $paramater from SMART-I(32) where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_advaithdfc32") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_advaithdfc32 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_ccil16") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_ccil16 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_cnspoc32") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_cnspoc32 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_hdfcadvait24") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_hdfcadvait24 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_hdfcadvaitgam24") {
+        echo "select $paramater from smarti_hdfcadvaitgam24 where (Zone='" . $zone . "' )";
+        $sql1 = mysqli_query($con, "select $paramater from smarti_hdfcadvaitgam24 where (Zone='" . $zone . "' )");
+    } else if ($panel_name == "smarti_hdfcadvaitgam32") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_hdfcadvaitgam32 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_hdfceuronet32") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_hdfceuronet32 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_idfceuronet32") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_idfceuronet32 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_idfceuronetadvait24") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_idfceuronetadvait24 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_idfceuronetadvaitgam24") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_idfceuronetadvaitgam24 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_idfceuronetadvaitgam32v3") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_idfceuronetadvaitgam32v3 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_kjsb32") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_kjsb32 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_kotakeuronet32") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_kotakeuronet32 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_kotakeuronetadvaitgam24") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_kotakeuronetadvaitgam24 where (Zone='" . $zone . "' ");
+    } else if ($panel_name == "smarti_kotakeuronetadvaitgam32") {
+        $sql1 = mysqli_query($con, "select $paramater from smarti_kotakeuronetadvaitgam32 where (Zone='" . $zone . "' ");
+    }
+
+
+
+    if ($sql == "") {
+        $return = "";
+    } else {
+        if (mysqli_num_rows($sql) > 0) {
+            $sql_result = mysqli_fetch_assoc($sql);
+            if ($_change == 1) {
+                if ($panel_name == 'comfort') {
+                    if (substr($alarm, -1) == 'R' || substr($alarm, -1) == 'N') {
+                        $return = $sql_result[$paramater] . " Restoral";
+                    }
+                } else {
+                    if (substr($alarm, -1) == 'R') {
+                        $return = $sql_result[$paramater] . " Restoral";
+                    }
+                }
+            } else {
+                $return = $sql_result[$paramater];
+            }
+        } else {
+            $return = "";
+        }
+    }
+    return $return;
+}
