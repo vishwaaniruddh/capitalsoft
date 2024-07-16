@@ -30,7 +30,8 @@ FROM (
         dvrsite ds ON d.IPAddress = ds.DVRIP   
     WHERE
         d.live = 'Y'
-				AND s.live='Y'
+        AND 
+        s.live='Y'
 		        AND d.customer = '" . $customer . "'
     GROUP BY
         CASE
@@ -52,14 +53,13 @@ COUNT(CASE WHEN a.status != 0 THEN 1 END) AS offline_count
 FROM 
 panel_health a
 INNER JOIN 
-sites b ON a.panelid = b.NewPanelID
+sites b ON a.panelid = b.NewPanelID AND b.live='Y'
 WHERE b.Customer='" . $customer . "' and b.live='Y'
 ";
 
 
-	$query4 = "SELECT COUNT(CASE WHEN a.hdd IN ('Yes', 'Normal', 'ok') THEN 1 ELSE NULL END) AS working_count, 
-COUNT(CASE WHEN a.hdd IS NULL THEN 1 ELSE NULL END) AS not_working_count FROM all_dvr_live a INNER JOIN sites b ON a.atmid=b.ATMID AND b.live='Y' 
-where a.customer='" . $customer . "'";
+	$query4 = "SELECT COUNT(CASE WHEN hdd IN ('Yes', 'Normal', 'ok') THEN 1 ELSE NULL END) AS working_count, 
+COUNT(CASE WHEN hdd IS NULL THEN 1 ELSE NULL END) AS not_working_count FROM all_dvr_live where customer='" . $customer . "'";
 
 } else {
 	// $query = "select count(1) as count from sites where live='Y'";
@@ -86,8 +86,8 @@ FROM (
         dvrsite ds ON d.IPAddress = ds.DVRIP   
     WHERE
         d.live = 'Y'
-				AND s.live='Y'
-
+        AND 
+        s.live='Y'
     GROUP BY
         CASE
             WHEN DATE(d.cdate) = CURDATE() AND d.login_status = 0 THEN 'Online'
@@ -115,8 +115,8 @@ INNER JOIN
 	WHERE b.live='Y'
 	";
 
-	$query4 = "SELECT COUNT(CASE WHEN a.hdd IN ('Yes', 'Normal', 'ok') THEN 1 ELSE NULL END) AS working_count, 
-COUNT(CASE WHEN a.hdd IS NULL THEN 1 ELSE NULL END) AS not_working_count FROM all_dvr_live a INNER JOIN sites b ON a.atmid= b.ATMID AND b.live='Y'" ;
+	$query4 = "SELECT COUNT(CASE WHEN hdd IN ('Yes', 'Normal', 'ok') THEN 1 ELSE NULL END) AS working_count, 
+COUNT(CASE WHEN hdd IS NULL THEN 1 ELSE NULL END) AS not_working_count FROM all_dvr_live";
 
 }
 
@@ -165,22 +165,6 @@ $hddOnline = $hddStatusResult['working_count'];
 <div class="row">
 
 	<div class="col">
-		<div class="card radius-10 border-start border-0 border-4 border-info">
-			<div class="card-body">
-				<div class="d-flex align-items-center">
-					<div>
-						<p class="mb-0 text-secondary">Total Sites</p>
-						<h4 class="my-1 text-info"><?php echo $totalSites; ?></h4>
-						<!-- <p class="mb-0 font-13">+2.5% from last week</p> -->
-					</div>
-					<div class="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto"><i
-							class="bx bxs-cart"></i>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col">
 		<div class="card radius-10 border-start border-0 border-4 border-danger">
 			<div class="card-body">
 				<div class="d-flex align-items-center">
@@ -213,20 +197,10 @@ $hddOnline = $hddStatusResult['working_count'];
 			</div>
 		</div>
 	</div>
-	<div class="col">
-		<div class="card radius-10 border-start border-0 border-4 border-warning">
-			<div class="card-body">
-				<div class="d-flex align-items-center">
-					<div>
-						<p class="mb-0 text-secondary">Hard Disk</p>
-						<h4 class="my-1 text-warning"><?php echo $hddOnline . ' / ' . $hddOffline; ?></h4>
-					</div>
-					<div class="widgets-icons-2 rounded-circle bg-gradient-orange text-white ms-auto"><i
-							class="bx bxs-group"></i>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 </div>
+
+
+
+
 

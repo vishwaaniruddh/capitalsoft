@@ -3,15 +3,15 @@
 
 
 
-$query1 = "SELECT COUNT(*) AS count FROM all_dvr_live WHERE live='Y'";
-$query2 = "SELECT COUNT(*) AS count FROM all_dvr_live WHERE live='Y' and status = 1"; // network online
-$query3 = "SELECT COUNT(*) AS count FROM all_dvr_live WHERE live='Y' and login_status = 1 AND status = 1";
-$query4 = "SELECT COUNT(*) AS count FROM all_dvr_live WHERE live='Y' and login_status IS NULL";
+$query1 = "SELECT COUNT(*) AS count FROM all_dvr_live a INNER JOIN sites b ON a.atmid = b.atmid WHERE a.live='Y' and b.live='Y'";
+$query2 = "SELECT COUNT(*) AS count FROM all_dvr_live a INNER JOIN sites b ON a.atmid = b.atmid WHERE a.live='Y' and b.live='Y' and a.status = 1"; // network online
+$query3 = "SELECT COUNT(*) AS count FROM all_dvr_live a INNER JOIN sites b ON a.atmid = b.atmid WHERE a.live='Y' and a.login_status = 1 AND a.status = 1 and b.live='Y'";
+$query4 = "SELECT COUNT(*) AS count FROM all_dvr_live a INNER JOIN sites b ON a.atmid = b.atmid WHERE a.live='Y' and a.login_status IS NULL and b.live='Y'";
 
 
 
-$query5 = "SELECT COUNT(*) AS count FROM all_dvr_live WHERE live='Y' and status=1 AND login_status = 0"; // DVR online
-$query6 = "SELECT COUNT(*) AS count FROM all_dvr_live WHERE live='Y' and (status = 0 OR status IS NULL)";
+$query5 = "SELECT COUNT(*) AS count FROM all_dvr_live a INNER JOIN sites b ON a.atmid = b.atmid WHERE a.live='Y' and a.status=1 AND a.login_status = 0 AND b.live='Y'"; // DVR online
+$query6 = "SELECT COUNT(*) AS count FROM all_dvr_live a INNER JOIN sites b ON a.atmid = b.atmid WHERE a.live='Y' and (a.status = 0 OR a.status IS NULL) AND b.live='Y'";
 
 $query7 = " SELECT COUNT(*) AS count FROM port_status_network_report p
 JOIN (SELECT SN FROM dvr_health) d ON p.site_id = d.SN
@@ -92,6 +92,7 @@ LEFT JOIN
     dvrsite ds ON d.IPAddress = ds.DVRIP   
 WHERE
     d.live = 'Y'
+    AND s.live='Y'
 GROUP BY
     CASE
         WHEN DATE(d.cdate) = CURDATE() AND d.login_status = 0 THEN 'Online'

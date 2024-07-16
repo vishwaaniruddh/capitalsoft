@@ -43,6 +43,7 @@ FROM (
     WHERE
         d.live = 'Y'
 		        AND d.customer = '" . $customer . "'
+				AND s.live='Y'
     GROUP BY
         CASE
             WHEN DATE(d.cdate) = CURDATE() AND d.login_status = 0 THEN 'Online'

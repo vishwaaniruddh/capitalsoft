@@ -137,7 +137,7 @@ if (!empty($_REQUEST['panelmak'])) {
 }
 
 
-$abc .= " and sendtoclient='S'";
+$abc .= " and a.live='Y' and sendtoclient='S'";
 
 
 if (!empty($_REQUEST['from']) && !empty($_REQUEST['to'])) {
@@ -279,108 +279,121 @@ $result = mysqli_query($con, $abc);
                 // echo $row["Panel_make"] . '<br />';
 
 
-                if ($row["Panel_make"] == "securico_hdfceuronet") {
-                    $sql1 = "select SensorName as Description,Camera from securico_hdfceuronet where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "mspl_hdfcadvait32") {
-                    $sql1 = "select SensorName as Description,Camera from mspl_hdfcadvait32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "mspl_idfceuronetadvait32") {
-                    $sql1 = "select SensorName as Description,Camera from mspl_idfceuronetadvait32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "rass_hdfceuronetsap500") {
-                    $sql1 = "select SensorName as Description,Camera from rass_hdfceuronetsap500 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "rass_india1sap500") {
-                    $sql1 = "select SensorName as Description,Camera from rass_india1sap500 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "RAXX_32Z-G1") {
-                    $sql1 = "select SensorName as Description,Camera from RAXX_32Z-G1 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "raxx_ccil32zg1") {
-                    $sql1 = "select SensorName as Description,Camera from raxx_ccil32zg1 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "raxx_ccilrtaapg1v2") {
-                    $sql1 = "select SensorName as Description,Camera from raxx_ccilrtaapg1v2 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "raxx_hdfceuronet32zg1") {
-                    $sql1 = "select SensorName as Description,Camera from raxx_hdfceuronet32zg1 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "raxx_india132zg1") {
-                    $sql1 = "select SensorName as Description,Camera from raxx_india132zg1 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "raxx_india1rtaapg1v2") {
-                    $sql1 = "select SensorName as Description,Camera from raxx_india1rtaapg1v2 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "raxx_kotakeuronet32zg1") {
-                    $sql1 = "select SensorName as Description,Camera from raxx_kotakeuronet32zg1 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "RT-AAP-G1(V2)") {
-                    $sql1 = "select SensorName as Description,Camera from RT-AAP-G1(V2) where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "SEC-GX4816") {
-                    $sql1 = "select SensorName as Description,Camera from SEC-GX4816 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "securico_ccil") {
-                    $sql1 = "select SensorName as Description,Camera from securico_ccil where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "securico_cnspoc") {
-                    $sql1 = "select SensorName as Description,Camera from securico_cnspoc where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "securico_gx4816") {
-                    $sql1 = "select SensorName as Description,Camera from securico_gx4816 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "securico_kjsb") {
-                    $sql1 = "select SensorName as Description,Camera from securico_kjsb where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "SMART-I(04)") {
-                    $sql1 = "select SensorName as Description,Camera from SMART-I(04) where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "SMART-I(16)") {
-                    $sql1 = "select SensorName as Description,Camera from SMART-I(16) where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "SMART-I(32)") {
-                    $sql1 = "select SensorName as Description,Camera from SMART-I(32) where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "smarti_advaithdfc32") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_advaithdfc32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "smarti_ccil16") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_ccil16 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "smarti_cnspoc32") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_cnspoc32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "smarti_hdfcadvait24") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_hdfcadvait24 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "smarti_hdfcadvaitgam24") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_hdfcadvaitgam24 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "smarti_hdfcadvaitgam32") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_hdfcadvaitgam32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "smarti_hdfceuronet32") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_hdfceuronet32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "smarti_idfceuronet32") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_idfceuronet32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "smarti_idfceuronetadvait24") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_idfceuronetadvait24 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "smarti_idfceuronetadvaitgam24") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_idfceuronetadvaitgam24 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "smarti_idfceuronetadvaitgam32v3") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_idfceuronetadvaitgam32v3 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "smarti_kjsb32") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_kjsb32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } 
+                // if ($row["Panel_make"] == "securico_hdfceuronet") {
+                //     $sql1 = "select SensorName as Description,Camera from securico_hdfceuronet where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "mspl_hdfcadvait32") {
+                //     $sql1 = "select SensorName as Description,Camera from mspl_hdfcadvait32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "mspl_idfceuronetadvait32") {
+                //     $sql1 = "select SensorName as Description,Camera from mspl_idfceuronetadvait32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "rass_hdfceuronetsap500") {
+                //     $sql1 = "select SensorName as Description,Camera from rass_hdfceuronetsap500 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "rass_india1sap500") {
+                //     $sql1 = "select SensorName as Description,Camera from rass_india1sap500 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "RAXX_32Z-G1") {
+                //     $sql1 = "select SensorName as Description,Camera from RAXX_32Z-G1 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "raxx_ccil32zg1") {
+                //     $sql1 = "select SensorName as Description,Camera from raxx_ccil32zg1 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "raxx_ccilrtaapg1v2") {
+                //     $sql1 = "select SensorName as Description,Camera from raxx_ccilrtaapg1v2 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "raxx_hdfceuronet32zg1") {
+                //     $sql1 = "select SensorName as Description,Camera from raxx_hdfceuronet32zg1 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "raxx_india132zg1") {
+                //     $sql1 = "select SensorName as Description,Camera from raxx_india132zg1 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "raxx_india1rtaapg1v2") {
+                //     $sql1 = "select SensorName as Description,Camera from raxx_india1rtaapg1v2 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "raxx_kotakeuronet32zg1") {
+                //     $sql1 = "select SensorName as Description,Camera from raxx_kotakeuronet32zg1 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "RT-AAP-G1(V2)") {
+                //     $sql1 = "select SensorName as Description,Camera from RT-AAP-G1(V2) where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "SEC-GX4816") {
+                //     $sql1 = "select SensorName as Description,Camera from SEC-GX4816 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "securico_ccil") {
+                //     $sql1 = "select SensorName as Description,Camera from securico_ccil where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "securico_cnspoc") {
+                //     $sql1 = "select SensorName as Description,Camera from securico_cnspoc where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "securico_gx4816") {
+                //     $sql1 = "select SensorName as Description,Camera from securico_gx4816 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "securico_kjsb") {
+                //     $sql1 = "select SensorName as Description,Camera from securico_kjsb where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "SMART-I(04)") {
+                //     $sql1 = "select SensorName as Description,Camera from SMART-I(04) where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "SMART-I(16)") {
+                //     $sql1 = "select SensorName as Description,Camera from SMART-I(16) where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "SMART-I(32)") {
+                //     $sql1 = "select SensorName as Description,Camera from SMART-I(32) where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "smarti_advaithdfc32") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_advaithdfc32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "smarti_ccil16") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_ccil16 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "smarti_cnspoc32") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_cnspoc32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "smarti_hdfcadvait24") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_hdfcadvait24 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "smarti_hdfcadvaitgam24") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_hdfcadvaitgam24 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "smarti_hdfcadvaitgam32") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_hdfcadvaitgam32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "smarti_hdfceuronet32") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_hdfceuronet32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "smarti_idfceuronet32") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_idfceuronet32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "smarti_idfceuronetadvait24") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_idfceuronetadvait24 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "smarti_idfceuronetadvaitgam24") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_idfceuronetadvaitgam24 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "smarti_idfceuronetadvaitgam32v3") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_idfceuronetadvaitgam32v3 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "smarti_kjsb32") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_kjsb32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } 
                 
-                else if ($row["Panel_make"] == "smarti_kotakeuronet32") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_kotakeuronet32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } 
+                // else if ($row["Panel_make"] == "smarti_kotakeuronet32") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_kotakeuronet32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } 
                 
-                else if ($row["Panel_make"] == "smarti_kotakeuronetadvaitgam24") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_kotakeuronetadvaitgam24 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } 
+                // else if ($row["Panel_make"] == "smarti_kotakeuronetadvaitgam24") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_kotakeuronetadvaitgam24 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } 
                 
-                else if ($row["Panel_make"] == "smarti_kotakeuronetadvaitgam32") {
-                    $sql1 = "select SensorName as Description,Camera from smarti_kotakeuronetadvaitgam32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } 
+                // else if ($row["Panel_make"] == "smarti_kotakeuronetadvaitgam32") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti_kotakeuronetadvaitgam32 where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } 
                 
                 
-                else if ($row["Panel_make"] == "SMART -I") {
-                    $sql1 = "select SensorName as Description,Camera from smarti where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } 
+                // else if ($row["Panel_make"] == "SMART -I") {
+                //     $sql1 = "select SensorName as Description,Camera from smarti where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } 
                 
-                else if ($row["Panel_make"] == "SMART-IN") {
-                    $sql1 = "select SensorName as Description,Camera from smartinew where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "SEC") {
-                    $sql1 = "select sensorname as Description,camera from securico where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "sec_sbi") {
-                    $sql1 = "select SensorName as Description,Camera from sec_sbi where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "RASS") {
-                    $sql1 = "select SensorName as Description,Camera from rass where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "rass_sbi") {
-                    $sql1 = "select SensorName as Description,Camera from rass_sbi where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "rass_cloud") {
-                    $sql1 = "select SensorName as Description,Camera from rass_cloud where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
-                } else if ($row["Panel_make"] == "Raxx") {
-                    $sql1 = "select SensorsName as Description,Camera from raxx where ZoneNumber='" . $row["zone"] . "' ";
-                } else if ($row["Panel_make"] == "securico_gx4816") {
-                    $sql1 = "select sensorname as Description,camera from securico_gx4816 where zone='" . $row["zone"] . "' ";
+                // else if ($row["Panel_make"] == "SMART-IN") {
+                //     $sql1 = "select SensorName as Description,Camera from smartinew where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "SEC") {
+                //     $sql1 = "select sensorname as Description,camera from securico where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "sec_sbi") {
+                //     $sql1 = "select SensorName as Description,Camera from sec_sbi where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "RASS") {
+                //     $sql1 = "select SensorName as Description,Camera from rass where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "rass_sbi") {
+                //     $sql1 = "select SensorName as Description,Camera from rass_sbi where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "rass_cloud") {
+                //     $sql1 = "select SensorName as Description,Camera from rass_cloud where (Zone='" . $row["zone"] . "' and SCODE='" . $row['alarm'] . "')";
+                // } else if ($row["Panel_make"] == "Raxx") {
+                //     $sql1 = "select SensorsName as Description,Camera from raxx where ZoneNumber='" . $row["zone"] . "' ";
+                // } else if ($row["Panel_make"] == "securico_gx4816") {
+                //     $sql1 = "select sensorname as Description,camera from securico_gx4816 where zone='" . $row["zone"] . "' ";
+                // }
+
+                $panelmake = $row["Panel_make"];
+
+                $alram_sql = mysqli_query($con, "select * from $panelmake where (Zone='" . $row["zone"] . "' and 
+                SCODE='" . $row['alarm'] . "')");
+                $result1 = mysqli_fetch_assoc($alram_sql);
+            
+                if (endsWith($row["alarm"], "R")) {
+                    $ds = $result1["SensorName"] . ' Restoral';
+                } else {
+                    $ds = $result1["SensorName"];
                 }
+
 
 
                 // echo $sql1;
@@ -390,11 +403,11 @@ $result = mysqli_query($con, $abc);
 
 
 
-                <td><?php echo $row1["Description"]; ?></td>
+                <td><?php echo $ds; ?></td>
                 <td><?php if (endsWith($row["alarm"], "R"))
-                    echo $row1["Description"] . ' Restoral';
+                    echo $ds . ' Restoral';
                 else
-                    echo $row1["Description"]; ?>
+                    echo $ds; ?>
                 </td>
                 <td><?php echo $row["createtime"]; ?></td>
                 <td><?php echo $row["receivedtime"]; ?></td>

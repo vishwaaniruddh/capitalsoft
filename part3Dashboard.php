@@ -11,7 +11,9 @@ $customer = isset($_POST['customer']) ? $_POST['customer'] : '';
 $sqlBase = "SELECT a.*, b.Customer, b.ATMID 
             FROM alerts a 
             INNER JOIN sites b ON a.panelid = b.NewPanelID 
-            WHERE DATE(a.receivedtime) = CURDATE() 
+            WHERE 
+            b.live = 'Y' AND 
+            DATE(a.receivedtime) = CURDATE() 
                 AND a.sendtoclient = 'S'";
 
 if (!empty($customer)) {

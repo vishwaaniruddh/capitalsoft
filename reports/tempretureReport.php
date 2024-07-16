@@ -3,8 +3,7 @@
 <div class="page-content">
 
 
-
-	<style>
+<style>
 		th,
 		td {
 			white-space: nowrap;
@@ -29,53 +28,32 @@
 			$('#show').html('');
 			var atmid = document.getElementById("atmid").value;
 			var customer = document.getElementById("customer").value;
-			var panelip = document.getElementById("panelip").value;
-			var panelName = document.getElementById("panelName").value;
 
 			var Page = "";
 			if (strPage != "") {
 				Page = strPage;
 			}
-
-			// Function to fetch data using AJAX
-			function fetchData() {
-				var showElement = $('#datatable-buttons');
-				var originalScrollLeft = showElement.scrollLeft();
-
-				$.ajax({
-					type: 'POST',
-					url: 'getPanelData.php',
-					data: {
-						atmid: atmid,
-						customer: customer,
-						panelip: panelip,
-						panelName: panelName,
-						Page: Page,
-						perpg: perpg, 
-					},
-					success: function (msg) {
-
-						$('#show').html(msg);
-						// Restore scroll position only if there was a previous scroll position
-						if (originalScrollLeft > 0) {
-							showElement.scrollLeft(originalScrollLeft);
-						}
-
-						$('#loadingmessage').hide(); // Hide the loading message after update
-					}
-				});
-			}
-
-			// Initial fetch
-			fetchData();
-
-			// Setup interval to fetch data every 5 seconds
-			setInterval(fetchData, 15000); // 5000 milliseconds = 5 seconds
+			$('#loadingmessage').show(); // show the loading message.
+			$.ajax({
+				type: 'POST',
+				url: 'getTempretureData.php',
+				data: {
+					atmid: atmid,
+					customer: customer,
+					Page: Page,
+					perpg: perpg, // Use the perpg variable passed into the function
+				},
+				success: function (msg) {
+					$('#loadingmessage').hide(); // hide the loading message
+					document.getElementById("show").innerHTML = msg;
+				}
+			});
 		}
 
 	</script>
 
-	<form id="searchForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+
+<form id="searchForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 		<div class="row">
 			<div class="col">
 				<label for="">ATMID</label>
@@ -100,27 +78,7 @@
 				</select>
 
 			</div>
-			<div class="col">
-				<label for="">Panel IP</label>
-				<input type="text" name="panelip" id="panelip" class="form-control form-control-sm mb-3"
-					value="<?php echo isset($_REQUEST['panelip']) ? $_REQUEST['panelip'] : ''; ?>" />
-			</div>
-			<div class="col">
-				<label for="">Panel Make</label>
-				<select name="panelName" id="panelName" class="form-control form-control-sm mb-3">
-					<option value="">Select</option>
-					<?php
-					$panelNamesql = mysqli_query($con, "select distinct(panelName) as panelName from panel_health");
-					while ($panelNamesqlResult = mysqli_fetch_assoc($panelNamesql)) {
-						$panelName = $panelNamesqlResult["panelName"];
-
-						?>
-						<option value="<?php echo $panelName; ?>"><?php echo $panelName; ?></option>
-						<?php
-					}
-					?>
-				</select>
-			</div>
+			
 		</div>
 		<input type="hidden" name="Page" id="currentPage" value="<?php echo $page; ?>">
 		<input type="hidden" name="perpg" id="perPage" value="<?php echo $records_per_page; ?>">
@@ -130,7 +88,13 @@
 	</form>
 
 
-	<div id='loadingmessage' style='display:none;'>
+
+
+
+
+
+
+<div id='loadingmessage' style='display:none;'>
 		<div class="spinner-grow" role="status" style="margin: auto;
 	display: block;"> <span class="visually-hidden">Loading...</span>
 		</div>

@@ -13,6 +13,7 @@ $statement = "SELECT a.*,
                              WHEN d.login_status = 1 AND d.status = 1 THEN 1 ELSE 0 END) as total_offline
              FROM sites a
              LEFT JOIN dvr_history d ON a.atmid = d.atmid
+             
              WHERE 1 ";
 
 if (!empty($_REQUEST['customer'])) {
@@ -32,7 +33,7 @@ if (!empty($_REQUEST['year'])) {
     $year = $_REQUEST['year'];
     $statement .= "AND YEAR(d.cdate) LIKE '%$year%' ";
 }
-$statement .= "GROUP BY a.atmid ";
+$statement .= " AND a.live='Y' GROUP BY a.atmid ";
 
 $withoutLimitsql = $statement;
 

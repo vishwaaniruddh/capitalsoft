@@ -6,7 +6,7 @@ $page = isset($_POST['Page']) && is_numeric($_POST['Page']) ? $_POST['Page'] : 1
 $records_per_page = isset($_POST['perpg']) && in_array($_POST['perpg'], [25, 50, 75, 100]) ? $_POST['perpg'] : 10;
 $offset = ($page - 1) * $records_per_page;
 
-$statement = "SELECT * from panel_health a INNER JOIN sites b ON a.atmid = b.ATMID  where 1 ";
+$statement = "SELECT * from panel_health a INNER JOIN sites b ON a.atmid = b.ATMID AND b.live='Y' where 1 ";
 
 
 // Apply filters

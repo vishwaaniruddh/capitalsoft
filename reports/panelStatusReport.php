@@ -41,7 +41,7 @@
 			$('#loadingmessage').show(); // show the loading message.
 			$.ajax({
 				type: 'POST',
-				url: 'getPanelData.php',
+				url: 'getPanelData_Status.php',
 				data: {
 					atmid: atmid,
 					customer: customer,

@@ -5,35 +5,40 @@ if($customer){
     
     $oneDaySqlAll = mysqli_query($con,"SELECT count(1) as count FROM alerts a INNER JOIN sites b 
     ON a.panelid = b.NewPanelID
-    WHERE a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S' and b.Customer='".$customer."'");
+    WHERE b.live='Y' AND a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S' and b.Customer='".$customer."'");
     
     $oneDaySqlOpen = mysqli_query($con,"SELECT count(1) as count FROM alerts a INNER JOIN sites b 
     ON a.panelid = b.NewPanelID
-    WHERE a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S' and a.status='O' and b.Customer='".$customer."'");
+    WHERE b.live='Y' AND a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S' and a.status='O' and b.Customer='".$customer."'");
     
     $oneDaySqlClose = mysqli_query($con,"SELECT count(1) as count FROM alerts a INNER JOIN sites b 
     ON a.panelid = b.NewPanelID
-    WHERE a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S' and a.status='C' and b.Customer='".$customer."'");
+    WHERE b.live='Y' AND a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S' and a.status='C' and b.Customer='".$customer."'");
     
     $oneDaySqlAllCritical = mysqli_query($con,"SELECT count(1) as count FROM alerts a INNER JOIN 
     sites s ON a.panelid = s.NewPanelID 
     LEFT JOIN alerttype b
     ON a.alerttype = b.alertType
-    WHERE a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S' and s.Customer='".$customer."'");
+    WHERE s.live='Y' AND a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S' and s.Customer='".$customer."'");
     
 }else{
-    $oneDaySqlAll = mysqli_query($con,"SELECT count(1) as count FROM alerts
-    WHERE receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and sendtoclient = 'S'");
+    $oneDaySqlAll = mysqli_query($con,"SELECT count(1) as count FROM alerts a INNER JOIN sites b
+    ON a.panelid = b.NewPanelID
+    WHERE b.live='Y' AND a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S'");
     
-    $oneDaySqlOpen = mysqli_query($con,"SELECT count(1) as count FROM alerts
-    WHERE receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and sendtoclient = 'S' and status='O'");
+    $oneDaySqlOpen = mysqli_query($con,"SELECT count(1) as count FROM alerts a INNER JOIN sites b
+    ON a.panelid = b.NewPanelID
+    WHERE b.live='Y' AND a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S' and a.status='O'");
     
-    $oneDaySqlClose = mysqli_query($con,"SELECT count(1) as count FROM alerts
-    WHERE receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and sendtoclient = 'S' and status='C'");
+    $oneDaySqlClose = mysqli_query($con,"SELECT count(1) as count FROM alerts a INNER JOIN sites b
+    ON a.panelid = b.NewPanelID
+    WHERE b.live='Y' AND a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S' and a.status='C'");
     
-    $oneDaySqlAllCritical = mysqli_query($con,"SELECT count(1) as count FROM alerts a INNER JOIN alerttype b
-    ON a.alerttype = b.alertType
-    WHERE a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S'");
+    $oneDaySqlAllCritical = mysqli_query($con,"SELECT count(1) as count FROM alerts a INNER JOIN sites b
+    ON a.panelid = b.NewPanelID    
+    INNER JOIN alerttype c
+    ON a.alerttype = c.alertType
+    WHERE b.live='Y' AND a.receivedtime >= DATE_SUB(NOW(), INTERVAL 12 HOUR) and a.sendtoclient = 'S'");
     
     
 }

@@ -29,48 +29,32 @@
 			$('#show').html('');
 			var atmid = document.getElementById("atmid").value;
 			var customer = document.getElementById("customer").value;
+
 			var panelip = document.getElementById("panelip").value;
 			var panelName = document.getElementById("panelName").value;
+
 
 			var Page = "";
 			if (strPage != "") {
 				Page = strPage;
 			}
-
-			// Function to fetch data using AJAX
-			function fetchData() {
-				var showElement = $('#datatable-buttons');
-				var originalScrollLeft = showElement.scrollLeft();
-
-				$.ajax({
-					type: 'POST',
-					url: 'getPanelData.php',
-					data: {
-						atmid: atmid,
-						customer: customer,
-						panelip: panelip,
-						panelName: panelName,
-						Page: Page,
-						perpg: perpg, 
-					},
-					success: function (msg) {
-
-						$('#show').html(msg);
-						// Restore scroll position only if there was a previous scroll position
-						if (originalScrollLeft > 0) {
-							showElement.scrollLeft(originalScrollLeft);
-						}
-
-						$('#loadingmessage').hide(); // Hide the loading message after update
-					}
-				});
-			}
-
-			// Initial fetch
-			fetchData();
-
-			// Setup interval to fetch data every 5 seconds
-			setInterval(fetchData, 15000); // 5000 milliseconds = 5 seconds
+			$('#loadingmessage').show(); // show the loading message.
+			$.ajax({
+				type: 'POST',
+				url: 'getPanelData.php',
+				data: {
+					atmid: atmid,
+					customer: customer,
+					panelip: panelip,
+					panelName: panelName,
+					Page: Page,
+					perpg: perpg, // Use the perpg variable passed into the function
+				},
+				success: function (msg) {
+					$('#loadingmessage').hide(); // hide the loading message
+					document.getElementById("show").innerHTML = msg;
+				}
+			});
 		}
 
 	</script>

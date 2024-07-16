@@ -10,7 +10,7 @@ if ($customer) {
     $query1 = "SELECT count(1) as count from panel_health a
         INNER JOIN 
         sites b ON a.panelid = b.NewPanelID
-        WHERE b.live='Y' and b.Customer='" . $customer . "'";
+        WHERE b.live='Y' and b.live='Y' and b.Customer='" . $customer . "'";
 
     $queries = [$query1];
     $results = [];
@@ -28,12 +28,12 @@ if ($customer) {
         panel_health a
         INNER JOIN 
         sites b ON a.panelid = b.NewPanelID
-        WHERE b.live='Y' and b.Customer='" . $customer . "'
+        WHERE b.live='Y' and b.live='Y' and b.Customer='" . $customer . "'
         ";
 
 
 } else {
-    $query1 = "SELECT count(1) as count from panel_health";
+    $query1 = "SELECT count(1) as count from panel_health a INNER JOIN sites b ON a.panelid = b.NewPanelID AND b.live='Y'";
     // $query2 = "SELECT count(1) as count from panel_health where status=1";
     // $query3 = "SELECT count(1) as count from panel_health where status=0";
 
@@ -138,12 +138,16 @@ $panelOnline = $panelStatusResult['online_count'];
                             $total_online = 0;
                             $total_offline = 0;
 
-                            $panelsql = mysqli_query($con, 'SELECT panelName,
+                            $panelsql = mysqli_query($con, 'SELECT a.panelName,
                                                         COUNT(*) as total,
-                                                        SUM(status = 1) as online,
-                                                        SUM(status = 0) as offline
-                                                        FROM panel_health
-                                                        GROUP BY panelName');
+                                                        SUM(a.status = 0) as online,
+                                                        SUM(a.status = 1) as offline
+                                                        FROM panel_health a
+                                                        INNER JOIN 
+                                                        sites b ON
+                                                        a.panelid=b.NewPanelID 
+                                                        AND b.live="Y"
+                                                        GROUP BY a.panelName');
 
                             while ($panelsqlResult = mysqli_fetch_assoc($panelsql)) {
                                 $total_records += $panelsqlResult['total'];

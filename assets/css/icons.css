@@ -24,7 +24,8 @@ File: icons.css
 	text-transform: none;
 	speak: none;
 	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale
+	-moz-osx-font-smoothing: grayscale;
+	font-size:15px;
 }
 
 .bx-ul {

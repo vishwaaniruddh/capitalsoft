@@ -31,6 +31,7 @@ if (!empty($customer)) {
     $query_alerts .= "
         INNER JOIN
         sites s ON a.panelid = s.NewPanelID
+        AND s.live='Y'
         AND s.Customer = '" . mysqli_real_escape_string($con, $customer) . "'";
 }
 
@@ -89,6 +90,7 @@ if (!empty($customer)) {
     $query_closed_alerts .= "
         INNER JOIN
         sites s ON a.panelid = s.NewPanelID
+        AND s.live='Y'
         AND s.Customer = '" . mysqli_real_escape_string($con, $customer) . "'";
 }
 

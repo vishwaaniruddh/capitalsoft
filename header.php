@@ -80,8 +80,16 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 </head>
 
 <!-- onload="info_noti()" -->
+<!-- style="text-transform: uppercase;" -->
 
 <body>
+
+<style>
+	button{
+		text-transform: uppercase;
+	}
+</style>
+
 	<!--wrapper-->
 	<div class="wrapper">
 		<!--sidebar wrapper -->
@@ -112,6 +120,9 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 						</li>
 						<li> <a href="<?php echo $base_url . 'clientSummary.php'; ?>"><i
 									class='bx bx-radio-circle'></i>Client Summary</a>
+						</li>
+						<li> <a href="<?php echo $base_url . 'panelDashboard.php'; ?>"><i
+									class='bx bx-radio-circle'></i>Panel Dashboard</a>
 						</li>
 					</ul>
 				</li>
@@ -168,6 +179,9 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 						<li> <a href="<?php echo $base_url . $folder . 'sites/view_sites.php'; ?>"><i
 									class='bx bx-radio-circle'></i>View Sites</a>
 						</li>
+						<li> <a href="<?php echo $base_url . 'sites/liveView.php'; ?>"><i
+									class='bx bx-radio-circle'></i>Live View</a>
+						</li>
 						<!-- <li> <a href="content-text-utilities.html"><i class='bx bx-radio-circle'></i>Text Utilities</a>
 						</li> -->
 					</ul>
@@ -222,40 +236,43 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 						<li> <a href="<?php echo $base_url . $folder . 'panel/allpanel.php'; ?>"><i
 									class='bx bx-radio-circle'></i>All Panel</a>
 						</li>
+						<li> <a href="<?php echo $base_url . $folder . 'panel/panelDetail.php'; ?>"><i
+									class='bx bx-radio-circle'></i>Panel Details</a>
+						</li>
 					</ul>
 				</li>
 
 
 
 
-				<li>
-					<a href="javascript:;" class="has-arrow">
-						<div class="parent-icon"><i class="bx bx-category"></i>
-						</div>
-						<div class="menu-title">Reports</div>
-					</a>
-					<ul>
-						<li> <a href="<?php echo $base_url . $folder . 'reports/cams_report.php'; ?>"><i
-									class='bx bx-radio-circle'></i>Cams</a>
-						</li>
-						<li> <a href="<?php echo $base_url . $folder . 'reports/chestdoor_report.php'; ?>"><i
-									class='bx bx-radio-circle'></i>ChestDoor</a>
-						</li>
-						<li> <a href="<?php echo $base_url . $folder . 'reports/health_check_report.php'; ?>"><i
-									class='bx bx-radio-circle'></i>Health Check</a>
-						</li>
+					<li>
+						<a href="javascript:;" class="has-arrow">
+							<div class="parent-icon"><i class="bx bx-category"></i>
+							</div>
+							<div class="menu-title">Reports</div>
+						</a>
+						<ul>
+							<li> <a href="<?php echo $base_url . $folder . 'reports/cams_report.php'; ?>"><i
+										class='bx bx-radio-circle'></i>Cams</a>
+							</li>
+							<li> <a href="<?php echo $base_url . $folder . 'reports/chestdoor_report.php'; ?>"><i
+										class='bx bx-radio-circle'></i>ChestDoor</a>
+							</li>
+							<li> <a href="<?php echo $base_url . $folder . 'reports/health_check_report.php'; ?>"><i
+										class='bx bx-radio-circle'></i>Health Check</a>
+							</li>
 
-						<li> <a href="<?php echo $base_url . $folder . 'reports/panel_up_down.php'; ?>"><i
-									class='bx bx-radio-circle'></i>Panel Up-Down</a>
-						</li>
+							<li> <a href="<?php echo $base_url . $folder . 'reports/panel_up_down.php'; ?>"><i
+										class='bx bx-radio-circle'></i>Panel Up-Down</a>
+							</li>
 
-						<li> <a href="<?php echo $base_url . $folder . 'reports/power_ups_report.php'; ?>"><i
-									class='bx bx-radio-circle'></i>Power Ups</a>
-						</li>
+							<li> <a href="<?php echo $base_url . $folder . 'reports/power_ups_report.php'; ?>"><i
+										class='bx bx-radio-circle'></i>Power Ups</a>
+							</li>
 
 
-					</ul>
-				</li>
+						</ul>
+					</li>
 
 
 
@@ -274,11 +291,11 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 					</a>
 					<ul class="mm-collapse" style="height: 2.22222px;">
 						<li>
-							<a href="<?php echo $base_url . $folder . 'dvr/alldvr.php'; ?>">
+							<a href="<?php echo $base_url . $folder . 'reports/alldvr.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> DVRHealth Report </a>
 						</li>
 						<li>
-							<a href="<?php echo $base_url . $folder . 'alert/viewalert.php'; ?>">
+							<a href="<?php echo $base_url . $folder . 'reports/viewalert.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> TicketView Report </a>
 						</li>
 						<li>
@@ -293,42 +310,56 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 							<a href="<?php echo $base_url . $folder . 'reports/SiteSummaryReportNetwork.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> Site Network Status </a>
 						</li>
-						<li>
-							<a href="DVRReport.html">
+
+						<!-- <li> <a href="<?php echo $base_url . $folder . 'dvr/alldvr.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> DVR Report </a>
+						</li> -->
+						
+						<li>
+							<a href="<?php echo $base_url . $folder . 'reports/ZoneStatusReport.php'; ?>">
+								<i class="bx bx-radio-circle"> </i> Zone Status Report </a>
 						</li>
+						<li>
+						
+						<a href="<?php echo $base_url . $folder . 'reports/excelReports.php'; ?>">
+								<i class="bx bx-radio-circle"> </i> Excel Reports </a>
+						</li>
+						<li>
+							<a href="<?php echo $base_url . $folder . 'reports/SiteDown.php'; ?>">
+								<i class="bx bx-radio-circle"> </i> Site Down Report </a>
+						</li>
+						<li>
+							<a href="<?php echo $base_url . $folder . 'reports/DVRStorageReport.php'; ?>">
+								<i class="bx bx-radio-circle"> </i> DVR Storage </a>
+						</li>
+
+						<li>
+
+							<a href="<?php echo $base_url . $folder . 'reports/chestdoor_report.php'; ?>">
+
+								<i class="bx bx-radio-circle"> </i> ATM Chest Door Report </a>
+						</li>
+
+
 						<li>
 							<a href="DvrLogsExport.aspx">
 								<i class="bx bx-radio-circle"> </i> DVR Communication </a>
 						</li>
-						<li>
-							<a href="ZoneStatusReport.html">
-								<i class="bx bx-radio-circle"> </i> Zone Status Report </a>
-						</li>
-						<li>
-							<a href="CamsUpsReport.html">
-								<i class="bx bx-radio-circle"> </i> Excel Reports </a>
-						</li>
-						<li>
-							<a href="SiteDown.html">
-								<i class="bx bx-radio-circle"> </i> Site Down Report </a>
-						</li>
+
+
 						<li>
 							<a href="DVRCameraReportXLS.html">
 								<i class="bx bx-radio-circle"> </i> DVR Camera </a>
 						</li>
 						<li>
-							<a href="TemperatureReport.html">
+						<a href="<?php echo $base_url . $folder . 'reports/tempretureReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> Temperature Report </a>
 						</li>
 						<li>
 							<a href="PanelHeartBeatReport.html">
 								<i class="bx bx-radio-circle"> </i> Panel HeartBeat </a>
 						</li>
-						<li>
-							<a href="DVRStorageReport.html">
-								<i class="bx bx-radio-circle"> </i> DVR Storage </a>
-						</li>
+						
 						<li>
 							<a href="HealthCheckUpReport.html">
 								<i class="bx bx-radio-circle"> </i> Health Check Up </a>
@@ -389,10 +420,7 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 							<a href="VideoCaptureDetailsReport.html">
 								<i class="bx bx-radio-circle"> </i> Video Capture Details Report </a>
 						</li>
-						<li>
-							<a href="ATMChestDoor.html">
-								<i class="bx bx-radio-circle"> </i> ATM Chest Door Report </a>
-						</li>
+						
 						<li>
 							<a href="WriterSafeGuardOnlineOfflineReport.html">
 								<i class="bx bx-radio-circle"> </i> Writer SafeGuard Online Offline Report </a>
