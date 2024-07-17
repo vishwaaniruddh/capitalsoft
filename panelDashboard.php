@@ -18,12 +18,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <script>
     // Function to fetch data using AJAX
-    function fetchData() {
-        $('#show').html('');
+    // function fetchData() {
+    //     // $('#show').html('');
+    //     var atmid = $('#atmid').val();
+    //     var customer = $('#customer').val();
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: 'getPanelDashboardData.php',
+    //         data: {
+    //             atmid: atmid,
+    //             customer: customer,
+                
+    //         },
+    //         success: function (msg) {
+    //             $('#show').html(msg);
+    //             $('#loadingmessage').hide(); // Hide the loading message after update
+    //         }
+    //     });
+    // }
+
+
+    function fetchDataPanel() {
+        $('#panelData').html('');
+        $('#panelDashboardDVR').html('');
+        $('#panelDashboardAlert').html('');
+        
         var atmid = $('#atmid').val();
         var customer = $('#customer').val();
-        var Page = $('#currentPage').val(); // Assuming you are using these variables in your data object
-
         $.ajax({
             type: 'POST',
             url: 'getPanelDashboardData.php',
@@ -33,11 +54,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
             },
             success: function (msg) {
-                $('#show').html(msg);
+                $('#panelData').html(msg);
                 $('#loadingmessage').hide(); // Hide the loading message after update
             }
         });
+        $.ajax({
+            type: 'POST',
+            url: 'getPanelDashboardData_dvr.php',
+            data: {
+                atmid: atmid,
+                customer: customer,
+                
+            },
+            success: function (msg) {
+                $('#panelDashboardDVR').html(msg);
+                $('#loadingmessage').hide(); // Hide the loading message after update
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: 'getPanelDashboardData_alert.php',
+            data: {
+                atmid: atmid,
+                customer: customer,
+                
+            },
+            success: function (msg) {
+                $('#panelDashboardAlert').html(msg);
+                $('#loadingmessage').hide(); // Hide the loading message after update
+            }
+        });
+        
     }
+
+
 
     $(document).ready(function () {
         // Initialize Select2 on customer dropdown
@@ -72,10 +123,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $('#atmid').val('<?php echo $atmid; ?>').trigger('change');
 
         // Initial fetch data
-        fetchData();
+        // fetchData();
 
         // Setup interval to fetch data every 15 seconds
-        setInterval(fetchData, 15000);
+        // setInterval(fetchData, 15000);
     });
 </script>
 
@@ -120,8 +171,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </select>
             </div>
             <div class="col">
-                <input type="button" class="btn btn-primary px-5 rounded-0" id="submitForm" name="submit" onclick="fetchData()"
-                value="search">
+                <br>
+                <button type="button" class="badge bg-primary" id="submitForm" name="submit" onclick="fetchDataPanel()"
+                value="search">Search</button>
             </div>
         </div>
 
@@ -133,7 +185,78 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
-    <div id="show"></div>
+    <div id="show">
+
+
+    <style>
+        .custom_box {
+            height: 50px; width:50px;
+            border: 1px solid;
+            padding: 10px;
+            margin: 5px auto;
+        }
+    </style>
+    <br> <br>
+    <div class="row">
+        <div class="col">
+            <h6 class="mb-0 text-uppercase">Panel Dashboard</h6>
+
+
+            <hr />
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-tabs nav-primary" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#panelData" role="tab" aria-selected="true">
+                                <div class="d-flex align-items-center">
+                                    <div class="tab-icon"><i class='bx bx-home font-18 me-1'></i>
+                                    </div>
+                                    <div class="tab-title">Panel</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-bs-toggle="tab" href="#panelDashboardDVR" role="tab" aria-selected="false">
+                                <div class="d-flex align-items-center">
+                                    <div class="tab-icon"><i class='bx bx-user-pin font-18 me-1'></i>
+                                    </div>
+                                    <div class="tab-title">Dvr</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-bs-toggle="tab" href="#panelDashboardAlert" role="tab" aria-selected="false">
+                                <div class="d-flex align-items-center">
+                                    <div class="tab-icon"><i class='bx bx-microphone font-18 me-1'></i>
+                                    </div>
+                                    <div class="tab-title">Alert</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+
+
+
+
+                    <div class="tab-content py-3">
+                    <div class="tab-pane fade show active" id="panelData" role="tabpanel">
+Panel
+                    </div>
+                    
+                    <div class="tab-pane fade" id="panelDashboardDVR" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="panelDashboardAlert" role="tabpanel"></div>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    </div>
 </div>
 
 <?php include ('./footer.php'); ?>

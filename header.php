@@ -23,7 +23,8 @@ if (!function_exists('verifyToken')) {
 if (verifyToken($token) != 1 || $token == 'NA') {
 
 	ob_start();
-	header('Location: /vertical/auth/login.php');
+	// header('Location: /vertical/auth/login.php');
+	header('Location: /capitalsoft/auth/login.php');
 	exit;
 }
 

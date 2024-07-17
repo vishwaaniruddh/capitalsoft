@@ -31,10 +31,6 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 ?>
 <!doctype html>
 <html lang="en" class="semi-dark">
-
-
-<!-- Mirrored from codervent.com/rocker/demo/vertical/index3.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Jun 2024 08:25:30 GMT -->
-
 <head>
 	<!-- Required meta tags -->
 	<meta charset="utf-8">

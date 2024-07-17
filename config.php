@@ -2,7 +2,8 @@
 date_default_timezone_set('Asia/Kolkata');
 error_reporting(0);
 
-define('BASE_URL', 'http://192.168.0.27:8080/vertical/');
+// define('BASE_URL', 'http://192.168.0.27:8080/vertical/');
+define('BASE_URL', 'http://localhost/capitalsoft/');
 
 
 if ($_SERVER["HTTPS"] == "on") {
@@ -15,7 +16,8 @@ if ($_SERVER["HTTPS"] == "on") {
 }
 
 
-$base_url = "http://192.168.0.27:8080/vertical/";
+// $base_url = "http://192.168.0.27:8080/vertical/";
+$base_url = "http://localhost/capitalsoft/";
 
 $host = "localhost";
 $user = "root";
@@ -123,3 +125,39 @@ function is_image($path)
     
     return $newDate;
 }
+function getPanelZoneStatus($panelip, $zone) {
+  global $con; // Use the global database connection
+
+  // Remove leading zeros from the zone number
+  $zone = ltrim($zone, '0');
+
+  // Construct the dynamic column name
+  $zoneColumn = "zon$zone";
+
+  // Check if the column exists in the panel_health table
+  $columnExists = false;
+  $result = mysqli_query($con, "SHOW COLUMNS FROM panel_health LIKE '$zoneColumn'");
+  if (mysqli_num_rows($result) > 0) {
+      $columnExists = true;
+  }
+
+  // If the column exists, proceed with the query
+  if ($columnExists) {
+      $sql = mysqli_query($con, "SELECT $zoneColumn FROM panel_health WHERE ip='$panelip'");
+      if ($sql_result = mysqli_fetch_assoc($sql)) {
+          return $sql_result[$zoneColumn];
+      } else {
+          return '';
+      }
+  } else {
+      // Handle the case where the column does not exist
+      return '';
+  }
+}
+
+
+// Example usage (assuming $con is your database connection and properly initialized)
+$panelip = '192.168.1.1';
+$zone = '001';
+$zoneStatus = getPanelZoneStatus($panelip, $zone);
+echo "Zone Status: " . ($zoneStatus !== null ? $zoneStatus : 'Not found');
