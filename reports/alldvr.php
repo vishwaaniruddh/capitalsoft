@@ -3,26 +3,26 @@
 <div class="page-content">
 
 
-	<style>
-		td,
-		th {
-			text-align: center;
-			white-space: nowrap;
-		}
-	</style>
+    <style>
+        td,
+        th {
+            text-align: center;
+            white-space: nowrap;
+        }
+    </style>
 
 
 
 
-	<?php
+    <?php
 
-	$page = isset($_REQUEST['Page']) && is_numeric($_REQUEST['Page']) ? $_REQUEST['Page'] : 1;
-	$records_per_page = isset($_REQUEST['perpg']) && in_array($_REQUEST['perpg'], [25, 50, 75, 100]) ? $_REQUEST['perpg'] : 10;
-	$offset = ($page - 1) * $records_per_page;
+    $page = isset($_REQUEST['Page']) && is_numeric($_REQUEST['Page']) ? $_REQUEST['Page'] : 1;
+    $records_per_page = isset($_REQUEST['perpg']) && in_array($_REQUEST['perpg'], [25, 50, 75, 100]) ? $_REQUEST['perpg'] : 10;
+    $offset = ($page - 1) * $records_per_page;
 
 
 
-	$abc = "
+    $abc = "
 	  SELECT
       CASE
         WHEN (s.ATMID IS NOT NULL) THEN s.ATMID
@@ -312,263 +312,264 @@ END AS 'Recording To',
 
 		";
 
-	if (!empty($_REQUEST['atmid'])) {
-		$abc .= " AND d.atmid LIKE '%" . $_REQUEST['atmid'] . "%'";
-	}
-	if (!empty($_REQUEST['dvrip'])) {
-		$abc .= " AND d.IPAddress LIKE '%" . $_REQUEST['dvrip'] . "%'";
-	}
-	if (!empty($_REQUEST['customer'])) {
-		$abc .= " AND d.customer LIKE '%" . $_REQUEST['customer'] . "%'";
-	}
+    if (!empty($_REQUEST['atmid'])) {
+        $abc .= " AND d.atmid LIKE '%" . $_REQUEST['atmid'] . "%'";
+    }
+    if (!empty($_REQUEST['dvrip'])) {
+        $abc .= " AND d.IPAddress LIKE '%" . $_REQUEST['dvrip'] . "%'";
+    }
+    if (!empty($_REQUEST['customer'])) {
+        $abc .= " AND d.customer LIKE '%" . $_REQUEST['customer'] . "%'";
+    }
 
-	// Query to get total records count
-	$sqlCount = mysqli_query($con, $abc);
-	$total_records = mysqli_num_rows($sqlCount);
-	
-	// Add LIMIT clause for pagination
-	$abc .= " GROUP BY d.IPAddress " ;
-	$withoutLimitsql = $abc;
-	
-	$abc .= " LIMIT $offset, $records_per_page";
-	$result = mysqli_query($con, $abc);
+    // Query to get total records count
+    $sqlCount = mysqli_query($con, $abc);
+    $total_records = mysqli_num_rows($sqlCount);
 
-	// Function to generate pagination HTML
-	function generatePagination($page, $total_pages, $records_per_page)
-	{
-		$html = '<nav aria-label="Page navigation"><ul class="pagination justify-content-center">';
-		if ($page > 1) {
-			$html .= '<li class="page-item"><a class="page-link" href="#alldvrtable" onclick="submitForm(1, ' . $records_per_page . ');">First</a></li>';
-			$html .= '<li class="page-item"><a class="page-link" href="#alldvrtable" onclick="submitForm(' . ($page - 1) . ', ' . $records_per_page . ');">Previous</a></li>';
-		}
-		$start = max(1, $page - 2);
-		$end = min($total_pages, $page + 2);
-		for ($i = $start; $i <= $end; $i++) {
-			$html .= '<li class="page-item ' . ($page == $i ? 'active' : '') . '"><a class="page-link" href="#alldvrtable" onclick="submitForm(' . $i . ', ' . $records_per_page . ');">' . $i . '</a></li>';
-		}
-		if ($page < $total_pages) {
-			$html .= '<li class="page-item"><a class="page-link" href="#alldvrtable" onclick="submitForm(' . ($page + 1) . ', ' . $records_per_page . ');">Next</a></li>';
-			$html .= '<li class="page-item"><a class="page-link" href="#alldvrtable" onclick="submitForm(' . $total_pages . ', ' . $records_per_page . ');">Last</a></li>';
-		}
-		$html .= '</ul></nav>';
-		return $html;
-	}
-	?>
+    // Add LIMIT clause for pagination
+    $abc .= " GROUP BY d.IPAddress ";
+    $withoutLimitsql = $abc;
 
+    $abc .= " LIMIT $offset, $records_per_page";
+    $result = mysqli_query($con, $abc);
 
-
-	<form id="searchForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-		<div class="row">
-			<div class="col">
-				<label for="">ATMID</label>
-				<input type="text" name="atmid" class="form-control form-control-sm mb-3"
-					value="<?php echo isset($_REQUEST['atmid']) ? $_REQUEST['atmid'] : ''; ?>" />
-			</div>
-			<div class="col">
-				<label for="">Customer:</label>
-				<select name="customer" class="form-control form-control-sm mb-3" id="customer">
-					<option value="">Select Customer Name</option>
-					<?php
-					$xyzz = "SELECT name FROM customer WHERE status = 1";
-					$runxyzz = mysqli_query($con, $xyzz);
-					while ($xyzfetchcus = mysqli_fetch_array($runxyzz)) {
-						$selected = '';
-						if (isset($_REQUEST['customer']) && $_REQUEST['customer'] == $xyzfetchcus['name']) {
-							$selected = 'selected';
-						}
-						echo '<option value="' . $xyzfetchcus['name'] . '" ' . $selected . '>' . $xyzfetchcus['name'] . '</option>';
-					}
-					?>
-				</select>
-
-			</div>
-			<div class="col">
-				<label for="">DVRIP</label>
-				<input type="text" name="dvrip" class="form-control form-control-sm mb-3"
-					value="<?php echo isset($_REQUEST['dvrip']) ? $_REQUEST['dvrip'] : ''; ?>" />
-			</div>
-		</div>
-		<input type="hidden" name="Page" id="currentPage" value="<?php echo $page; ?>">
-		<input type="hidden" name="perpg" id="perPage" value="<?php echo $records_per_page; ?>">
-		<input type="button" onclick="submitForm(<?php echo $page; ?>, <?php echo $records_per_page; ?>);"
-			class="btn btn-primary px-5 rounded-0" value="Search">
-	</form>
-
-	<hr>
-
-	<div class="card">
-		<div class="card-body" style="overflow:auto;">
-			<div class="total_n_export" id="tabletop" style="display: flex;
-	justify-content: space-between;">
-
-				<h6 class="mb-0 text-uppercase">Total Records : <?php echo $total_records; ?></h6>
-				<form action="./exportdvrReport.php" method="POST">
-					<input type="hidden" name="exportsql" value="<?php echo $withoutLimitsql; ?>">
-					<button type="submit" class="btn btn-outline-info btn-sm px-5 radius-30"><i
-							class="bx bx-cloud-download mr-1"></i>Export</button>
-				</form>
-			</div>
-
-			<hr />
-
-			<table id="alldvrtable" class="table1 table table-bordered">
-				<thead class="table-primary">
-					<tr>
-						<th>SRNO</th>
-						<th>ATMID</th>
-						<th>BANK</th>
-						<th>CUSTOMER</th>
-						<th>DVR STATUS</th>
-						<th>DVR TIME</th>
-						<th>PING STATUS</th>
-						<th>CDATE</th>
-						<th>TIME DIFF (HH:MM)</th>
-						<th>LAST COMMUNICATION</th>
-						<th>DOWN SINCE (Days)</th>
-						<th>AGING (Days)</th>
-						<th>DVR NAME</th>
-						<th>IP</th>
-						<th>HDD DB</th>
-						<th>HDD</th>
-						<th>REC</th>
-						<th>CAM STATUS</th>
-
-						<th>REC FROM</th>
-						<th>REC TO</th>
-						<th>Site Type</th>
-						<th>REFRESH</th>
-						<th>CITY</th>
-						<th>STATE</th>
-						<th>BRANCH ADDRESS</th>
-						<th>ZONE</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-					$i = ($page - 1) * $records_per_page + 1;
-
-					while ($row = mysqli_fetch_array($result)) {
-
-
-						?>
-						<tr>
-							<td><?php echo $i; ?></td>
-							<td><?php echo $row['ATMID']; ?></td>
-							<td><?php echo $row['Bank']; ?></td>
-							<td><?php echo $row['Customer']; ?></td>
-							<td><?php echo $row['DVR Status']; ?></td>
-							<td><?php echo $row['DVR Time']; ?></td>
-							<td><?php echo $row['ping_status']; ?></td>
-							<td><?php echo $row['Current Date']; ?></td>
-							<td><?php echo $row['Time Difference']; ?></td>
-							<td><?php echo $row['last_communication']; ?></td>
-
-							<td>DOWN SINCE (Days)</td>
-							<td>AGING (Days)</td>
-							<td><?php echo $row['DVR Name']; ?></td>
-							<td><?php echo $row['IP Address']; ?></td>
-							<td><?php echo $row['HDD Status']; ?></td>
-							<td style="text-align:center;"><?php
-
-							if ($row['HDD Status'] == 'Working') {
-								echo '<i class="fadeIn animated bx bx-check-circle" style="cursor:pointer; color:green;"></i>';
-							} else {
-								echo '<i class="lni lni-cross-circle" style="cursor:pointer; color:red;"></i>';
-							}
-							?></td>
-
-
-							<td style="text-align:center;"><?php
-
-							if ($row['Recording To Status'] == 'Running') {
-								echo '<i class="fadeIn animated bx bx-check-circle" style="cursor:pointer; color:green;"></i>';
-							} else {
-								echo '<i class="lni lni-cross-circle" style="cursor:pointer; color:red;"></i>';
-							}
-							?>
+    // Function to generate pagination HTML
+    function generatePagination($page, $total_pages, $records_per_page)
+    {
+        $html = '<nav aria-label="Page navigation"><ul class="pagination justify-content-center">';
+        if ($page > 1) {
+            $html .= '<li class="page-item"><a class="page-link" href="#alldvrtable" onclick="submitForm(1, ' . $records_per_page . ');">First</a></li>';
+            $html .= '<li class="page-item"><a class="page-link" href="#alldvrtable" onclick="submitForm(' . ($page - 1) . ', ' . $records_per_page . ');">Previous</a></li>';
+        }
+        $start = max(1, $page - 2);
+        $end = min($total_pages, $page + 2);
+        for ($i = $start; $i <= $end; $i++) {
+            $html .= '<li class="page-item ' . ($page == $i ? 'active' : '') . '"><a class="page-link" href="#alldvrtable" onclick="submitForm(' . $i . ', ' . $records_per_page . ');">' . $i . '</a></li>';
+        }
+        if ($page < $total_pages) {
+            $html .= '<li class="page-item"><a class="page-link" href="#alldvrtable" onclick="submitForm(' . ($page + 1) . ', ' . $records_per_page . ');">Next</a></li>';
+            $html .= '<li class="page-item"><a class="page-link" href="#alldvrtable" onclick="submitForm(' . $total_pages . ', ' . $records_per_page . ');">Last</a></li>';
+        }
+        $html .= '</ul></nav>';
+        return $html;
+    }
+    ?>
 
 
 
-							</td>
-							<td>
-								<?php
-								if ($row['cam1'] == 'working') {
-									echo '<i class="fadeIn animated bx bx-camera" style="cursor:pointer; color:green;"
+    <form id="searchForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+        <div class="row">
+            <div class="col">
+                <label for="">ATMID</label>
+                <input type="text" name="atmid" class="form-control form-control-sm mb-3"
+                    value="<?php echo isset($_REQUEST['atmid']) ? $_REQUEST['atmid'] : ''; ?>" />
+            </div>
+            <div class="col">
+                <label for="">Customer:</label>
+                <select name="customer" class="form-control form-control-sm mb-3" id="customer">
+                    <option value="">Select Customer Name</option>
+                    <?php
+                    $xyzz = "SELECT name FROM customer WHERE status = 1";
+                    $runxyzz = mysqli_query($con, $xyzz);
+                    while ($xyzfetchcus = mysqli_fetch_array($runxyzz)) {
+                        $selected = '';
+                        if (isset($_REQUEST['customer']) && $_REQUEST['customer'] == $xyzfetchcus['name']) {
+                            $selected = 'selected';
+                        }
+                        echo '<option value="' . $xyzfetchcus['name'] . '" ' . $selected . '>' . $xyzfetchcus['name'] . '</option>';
+                    }
+                    ?>
+                </select>
+
+            </div>
+            <div class="col">
+                <label for="">DVRIP</label>
+                <input type="text" name="dvrip" class="form-control form-control-sm mb-3"
+                    value="<?php echo isset($_REQUEST['dvrip']) ? $_REQUEST['dvrip'] : ''; ?>" />
+            </div>
+        </div>
+        <input type="hidden" name="Page" id="currentPage" value="<?php echo $page; ?>">
+        <input type="hidden" name="perpg" id="perPage" value="<?php echo $records_per_page; ?>">
+        <input type="button" onclick="submitForm(<?php echo $page; ?>, <?php echo $records_per_page; ?>);"
+            class="btn btn-primary px-5 rounded-0" value="Search">
+    </form>
+
+    <hr>
+
+    <div class="card">
+        <div class="card-body" style="overflow:auto;">
+            <div class="total_n_export" id="tabletop" style="display: flex;
+    justify-content: space-between;">
+
+
+                <h6 class="mb-0 text-uppercase">Total Records : <?php echo $total_records; ?></h6>
+                <form action="./exportdvrReport.php" method="POST">
+                    <input type="hidden" name="exportsql" value="<?php echo $withoutLimitsql; ?>">
+                    <button type="submit" class="btn btn-outline-info btn-sm px-5 radius-30"><i
+                            class="bx bx-cloud-download mr-1"></i>Export</button>
+                </form>
+            </div>
+
+            <hr />
+
+            <table id="alldvrtable" class="table1 table table-bordered">
+                <thead class="table-primary">
+                    <tr>
+                        <th>SRNO</th>
+                        <th>ATMID</th>
+                        <th>BANK</th>
+                        <th>CUSTOMER</th>
+                        <th>DVR STATUS</th>
+                        <th>DVR TIME</th>
+                        <th>PING STATUS</th>
+                        <th>CDATE</th>
+                        <th>TIME DIFF (HH:MM)</th>
+                        <th>LAST COMMUNICATION</th>
+                        <th>DOWN SINCE (Days)</th>
+                        <th>AGING (Days)</th>
+                        <th>DVR NAME</th>
+                        <th>IP</th>
+                        <th>HDD DB</th>
+                        <th>HDD</th>
+                        <th>REC</th>
+                        <th>CAM STATUS</th>
+
+                        <th>REC FROM</th>
+                        <th>REC TO</th>
+                        <th>Site Type</th>
+                        <th>REFRESH</th>
+                        <th>CITY</th>
+                        <th>STATE</th>
+                        <th>BRANCH ADDRESS</th>
+                        <th>ZONE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $i = ($page - 1) * $records_per_page + 1;
+
+                    while ($row = mysqli_fetch_array($result)) {
+
+
+                        ?>
+                        <tr>
+                            <td><?php echo $i; ?></td>
+                            <td><?php echo $row['ATMID']; ?></td>
+                            <td><?php echo $row['Bank']; ?></td>
+                            <td><?php echo $row['Customer']; ?></td>
+                            <td><?php echo $row['DVR Status']; ?></td>
+                            <td><?php echo $row['DVR Time']; ?></td>
+                            <td><?php echo $row['ping_status']; ?></td>
+                            <td><?php echo $row['Current Date']; ?></td>
+                            <td><?php echo $row['Time Difference']; ?></td>
+                            <td><?php echo $row['last_communication']; ?></td>
+
+                            <td>DOWN SINCE (Days)</td>
+                            <td>AGING (Days)</td>
+                            <td><?php echo $row['DVR Name']; ?></td>
+                            <td><?php echo $row['IP Address']; ?></td>
+                            <td><?php echo $row['HDD Status']; ?></td>
+                            <td style="text-align:center;"><?php
+
+                            if ($row['HDD Status'] == 'Working') {
+                                echo '<i class="fadeIn animated bx bx-check-circle" style="cursor:pointer; color:green;"></i>';
+                            } else {
+                                echo '<i class="lni lni-cross-circle" style="cursor:pointer; color:red;"></i>';
+                            }
+                            ?></td>
+
+
+                            <td style="text-align:center;"><?php
+
+                            if ($row['Recording To Status'] == 'Running') {
+                                echo '<i class="fadeIn animated bx bx-check-circle" style="cursor:pointer; color:green;"></i>';
+                            } else {
+                                echo '<i class="lni lni-cross-circle" style="cursor:pointer; color:red;"></i>';
+                            }
+                            ?>
+
+
+
+                            </td>
+                            <td>
+                                <?php
+                                if ($row['cam1'] == 'working') {
+                                    echo '<i class="fadeIn animated bx bx-camera" style="cursor:pointer; color:green;"
 									title="Working"></i> |';
-								} else {
-									echo '<i class="fadeIn animated bx bx-camera-off" style="cursor:pointer; color:red;"
+                                } else {
+                                    echo '<i class="fadeIn animated bx bx-camera-off" style="cursor:pointer; color:red;"
 									title="Not Working"></i> |';
-								}
+                                }
 
-								if ($row['cam2'] == 'working') {
-									echo '<i class="fadeIn animated bx bx-camera" style="cursor:pointer; color:green;"
+                                if ($row['cam2'] == 'working') {
+                                    echo '<i class="fadeIn animated bx bx-camera" style="cursor:pointer; color:green;"
 									title="Working"></i> |';
-								} else {
-									echo '<i class="fadeIn animated bx bx-camera-off" style="cursor:pointer; color:red;"
+                                } else {
+                                    echo '<i class="fadeIn animated bx bx-camera-off" style="cursor:pointer; color:red;"
 									title="Not Working"></i> |';
-								}
+                                }
 
-								if ($row['cam3'] == 'working') {
-									echo '<i class="fadeIn animated bx bx-camera" style="cursor:pointer; color:green;"
+                                if ($row['cam3'] == 'working') {
+                                    echo '<i class="fadeIn animated bx bx-camera" style="cursor:pointer; color:green;"
 									title="Working"></i> |';
-								} else {
-									echo '<i class="fadeIn animated bx bx-camera-off" style="cursor:pointer; color:red;"
+                                } else {
+                                    echo '<i class="fadeIn animated bx bx-camera-off" style="cursor:pointer; color:red;"
 									title="Not Working"></i> |';
-								}
+                                }
 
-								if ($row['cam4'] == 'working') {
-									echo '<i class="fadeIn animated bx bx-camera" style="cursor:pointer; color:green;"
+                                if ($row['cam4'] == 'working') {
+                                    echo '<i class="fadeIn animated bx bx-camera" style="cursor:pointer; color:green;"
 									title="Working"></i>';
-								} else {
-									echo '<i class="fadeIn animated bx bx-camera-off" style="cursor:pointer; color:red;"
+                                } else {
+                                    echo '<i class="fadeIn animated bx bx-camera-off" style="cursor:pointer; color:red;"
 									title="Not Working"></i>';
-								}
+                                }
 
-								?>
-							</td>
+                                ?>
+                            </td>
 
-							<td><?php echo $row['Recording From']; ?></td>
-							<td><?php echo $row['Recording To']; ?></td>
-							<td><?php echo $row['Project']; ?></td>
-							<td style="text-align:center;">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-									fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-									stroke-linejoin="round" class="feather feather-refresh-ccw text-primary" style="
-	font-size: 14px;
+                            <td><?php echo $row['Recording From']; ?></td>
+                            <td><?php echo $row['Recording To']; ?></td>
+                            <td><?php echo $row['Project']; ?></td>
+                            <td style="text-align:center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-refresh-ccw text-primary" style="
+    font-size: 14px;
 ">
-									<polyline points="1 4 1 10 7 10"></polyline>
-									<polyline points="23 20 23 14 17 14"></polyline>
-									<path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
-								</svg>
-							</td>
-							<td><?php echo $row['City']; ?></td>
-							<td><?php echo $row['State']; ?></td>
-							<td><?php echo $row['SiteAddress']; ?></td>
-							<td><?php echo $row['Zone']; ?></td>
-						</tr>
-						<?php
-						$i++;
-					}
+                                    <polyline points="1 4 1 10 7 10"></polyline>
+                                    <polyline points="23 20 23 14 17 14"></polyline>
+                                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+                                </svg>
+                            </td>
+                            <td><?php echo $row['City']; ?></td>
+                            <td><?php echo $row['State']; ?></td>
+                            <td><?php echo $row['SiteAddress']; ?></td>
+                            <td><?php echo $row['Zone']; ?></td>
+                        </tr>
+                        <?php
+                        $i++;
+                    }
 
-					?>
-				</tbody>
-			</table>
-			<?php
-			// Calculate total pages
-			$total_pages = ceil($total_records / $records_per_page);
-			// Output pagination controls
-			echo generatePagination($page, $total_pages, $records_per_page);
-			?>
-		</div>
-	</div>
+                    ?>
+                </tbody>
+            </table>
+            <?php
+            // Calculate total pages
+            $total_pages = ceil($total_records / $records_per_page);
+            // Output pagination controls
+            echo generatePagination($page, $total_pages, $records_per_page);
+            ?>
+        </div>
+    </div>
 
-	<script>
-		function submitForm(page, perPage) {
-			document.getElementById('currentPage').value = page;
-			document.getElementById('perPage').value = perPage;
-			document.getElementById('searchForm').submit();
-		}
-	</script>
+    <script>
+        function submitForm(page, perPage) {
+            document.getElementById('currentPage').value = page;
+            document.getElementById('perPage').value = perPage;
+            document.getElementById('searchForm').submit();
+        }
+    </script>
 
 </div>
 

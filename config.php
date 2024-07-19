@@ -125,13 +125,18 @@ function is_image($path)
     
     return $newDate;
 }
+function convertDateFormat($datetime, $outputFormat = "d-m-Y") {
+  // Convert input datetime string to Unix timestamp
+  $timestamp = strtotime($datetime);
+  
+  // Format the timestamp to the desired output format
+  $newDate = date($outputFormat, $timestamp);
+  
+  return $newDate;
+}
 function getPanelZoneStatus($panelip, $zone) {
-  global $con; // Use the global database connection
-
-  // Remove leading zeros from the zone number
+  global $con; 
   $zone = ltrim($zone, '0');
-
-  // Construct the dynamic column name
   $zoneColumn = "zon$zone";
 
   // Check if the column exists in the panel_health table
@@ -153,4 +158,20 @@ function getPanelZoneStatus($panelip, $zone) {
       // Handle the case where the column does not exist
       return '';
   }
+}
+
+function getPanelZone($panelMake, $sensorType)
+{
+    global $con;
+    $query = "SELECT ZONE FROM $panelMake WHERE SensorName like '%" . $sensorType . "%'";
+    $result = mysqli_query($con, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $panelrow = mysqli_fetch_assoc($result);
+
+        return $panelrow['ZONE'];
+    } else {
+        return 0;
+    }
+
 }

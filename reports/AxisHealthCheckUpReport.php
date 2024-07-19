@@ -3,89 +3,18 @@
 <div class="page-content">
     <?php
 
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
-    $customer = '';
+    $customer = 'AXIS_Bank';
     $atmid = '';
 
 
-
-    // $panelMake = 'smarti_hdfceuronet16';
-    // $sensorType = 'Hooter';
-    // $panelip = '172.16.12.151';
-    
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 
 
-    // // return;
-    // $sensorTypes = array(
-    //     'Hooter',
-    //     'Two way',
-    //     'Smoke S',
-    //     'glass break',
-    //     'backroom door key pad',
-    //     'ATM removal',
-    //     'vibration',
-    //     'Hood',
-    //     'CHest Door',
-    //     'ATM Thermal Sensor',
-    //     'PIR Sensor',
-    //     'ATM SPK & MIC Removal',
-    //     'ATM AC',
-    //     'Temperature Sensor',
-    //     'EM Lock'
-    // );
-    
-    // // Initialize an array to store ZONE codes
-    // $zoneCodes = array();
-    // $panelMake = 'smarti_hdfceuronet16';
-    // // Iterate through each sensor type and fetch its ZONE code
-    // foreach ($sensorTypes as $sensorType) {
-    //     // Construct the SQL query
-    //     $query = "SELECT ZONE FROM $panelMake WHERE SensorName like '%" . $sensorType . "%'";
-    
-    //     // Perform the query
-    //     $result = mysqli_query($con, $query);
-    
-    //     // Check if there are results
-    //     if ($result && mysqli_num_rows($result) > 0) {
-    //         // Fetch the ZONE code (assuming only one row per sensor type)
-    //         $row = mysqli_fetch_assoc($result);
-    //         $zoneCodes[$sensorType] = $row['ZONE'];
-    //     } else {
-    //         // If no results found for the sensor type, handle accordingly (e.g., set to NULL)
-    //         $zoneCodes[$sensorType] = null;
-    //     }
-    
-    //     // Free result set
-    //     mysqli_free_result($result);
-    // }
-    
-    // // Now $zoneCodes array will contain ZONE codes for each sensor type
-    // // Print or use $zoneCodes as needed
-    // echo '<pre>';
-    // print_r($zoneCodes);
-    // echo '</pre>';
-    
-    ?>
-
-
-    <?php
-    //  include ('../footer.php'); 
-    ?>
-    <!-- <script src="<?php echo BASE_URL; ?>/assets/js/select2.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>/assets/plugins/select2/js/select2-custom.js"></script> -->
-    <?php
-
-    // return ; 
-    
     // Check if form submitted
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Retrieve form data
-        $customer = isset($_POST['customer']) ? $_POST['customer'] : '';
         $atmid = isset($_POST['atmid']) ? $_POST['atmid'] : '';
     }
     ?>
@@ -417,15 +346,13 @@ END AS 'Recording To',
   FROM
   all_dvr_live d
   LEFT JOIN
-  sites s ON d.IPAddress = s.DVRIP
+  sites s ON d.IPAddress = s.DVRIP AND s.live='Y'
 LEFT JOIN
   dvronline o ON d.IPAddress = o.IPAddress  
 LEFT JOIN
-  dvrsite ds ON d.IPAddress = ds.DVRIP   
+  dvrsite ds ON d.IPAddress = ds.DVRIP AND ds.live='Y'
   WHERE
     d.live = 'Y' 
-    AND 
-    s.live='Y'
 
     ";
 
@@ -435,9 +362,8 @@ LEFT JOIN
     if (!empty($_REQUEST['dvrip'])) {
         $abc .= " AND d.IPAddress LIKE '%" . $_REQUEST['dvrip'] . "%'";
     }
-    if (!empty($_REQUEST['customer'])) {
-        $abc .= " AND d.customer LIKE '%" . $_REQUEST['customer'] . "%'";
-    }
+        $abc .= " AND d.customer LIKE '%" . $customer . "%'";
+    
 
     // Query to get total records count
     $sqlCount = mysqli_query($con, $abc);
@@ -480,7 +406,7 @@ LEFT JOIN
                 <select name="customer" class="form-control form-control-sm mb-3" id="customer">
                     <option value="">Select Customer Name</option>
                     <?php
-                    $xyzz = "SELECT name FROM customer WHERE status = 1";
+                    $xyzz = "SELECT name FROM customer WHERE status = 1 and name='AXIS_Bank'";
                     $runxyzz = mysqli_query($con, $xyzz);
                     while ($xyzfetchcus = mysqli_fetch_array($runxyzz)) {
                         $selected = ($customer == $xyzfetchcus['name']) ? 'selected' : '';
@@ -494,10 +420,12 @@ LEFT JOIN
                 <select class="form-control form-control-sm mb-3" name="atmid" id="atmid"
                     data-placeholder="Choose ATMID">
                     <?php
+
+                    echo 'Aniruddh' . $customer ;
                     // Populate ATMID dropdown based on selected customer
                     if (!empty($customer)) {
                         $selected_customer = mysqli_real_escape_string($con, $customer);
-                        $query = "SELECT ATMID FROM sites WHERE Customer = '$selected_customer'";
+                       echo  $query = "SELECT ATMID FROM dvrsite WHERE Customer = '$selected_customer'";
                         $selected_customer = mysqli_query($con, $query);
                         if ($selected_customer) {
                             while ($customerrow = mysqli_fetch_assoc($selected_customer)) {
@@ -514,9 +442,13 @@ LEFT JOIN
                 </select>
             </div>
             <div class="col">
-                <br>
-                <button type="button" class="badge bg-primary" id="submitForm" name="submit" onclick="fetchDataPanel()"
-                    value="search">Search</button>
+                <input type="hidden" name="Page" id="currentPage" value="<?php echo $page; ?>">
+                <input type="hidden" name="perpg" id="perPage" value="<?php echo $records_per_page; ?>">
+                <input type="button" onclick="submitForm(<?php echo $page; ?>, <?php echo $records_per_page; ?>);"
+                    class="" value="Search">
+                <!-- <br>
+                <button type="button" class="badge bg-primary" id="submitForm" name="submit" onclick="submitForm()"
+                    value="search">Search</button> -->
             </div>
         </div>
 
@@ -592,10 +524,10 @@ LEFT JOIN
                 <tbody>
                     <?php
                     $i = ($page - 1) * $records_per_page + 1;
-                    while ($row = mysqli_fetch_array($result)) {
+                    while ($row = mysqli_fetch_assoc($result)) {
 
                         $recordingFrom = null;
-                        $recordingTo =  null;
+                        $recordingTo = null;
 
 
 
@@ -604,49 +536,48 @@ LEFT JOIN
                         $city = $row['City'];
                         $recordingFrom = isset($row['Recording From']) ? $row['Recording From'] : '';
                         $recordingTo = isset($row['Recording To']) ? $row['Recording To'] : '';
-                        
-                        
+
+
 
                         $formattedDifference = '-';
                         $difference_in_days = '-';
 
                         if (!empty($recordingFrom) && !empty($recordingTo)) {
                             try {
-                            // Calculate day difference 
-                            $from_timestamp = strtotime($recordingFrom);
-                            $to_timestamp = strtotime($recordingTo);
-                            $difference_in_seconds = $to_timestamp - $from_timestamp;
-                            $difference_in_days = $difference_in_seconds / 86400;
-                            $difference_in_days = round($difference_in_days);
-                            // End
-                            $datetime1 = new DateTime($recordingFrom);
-                            $datetime2 = new DateTime($recordingTo);
+                                // Calculate day difference 
+                                $from_timestamp = strtotime($recordingFrom);
+                                $to_timestamp = strtotime($recordingTo);
+                                $difference_in_seconds = $to_timestamp - $from_timestamp;
+                                $difference_in_days = $difference_in_seconds / 86400;
+                                $difference_in_days = round($difference_in_days);
+                                // End
+                                $datetime1 = new DateTime($recordingFrom);
+                                $datetime2 = new DateTime($recordingTo);
 
-                            // Calculate the difference between two DateTime objects
-                            $difference = $datetime1->diff($datetime2);
+                                // Calculate the difference between two DateTime objects
+                                $difference = $datetime1->diff($datetime2);
 
-                            // Format the difference into days, hours, and optionally minutes
-                            $days = $difference->days;
-                            $hours = $difference->h;
-                            $minutes = $difference->i;
+                                // Format the difference into days, hours, and optionally minutes
+                                $days = $difference->days;
+                                $hours = $difference->h;
+                                $minutes = $difference->i;
 
-                            // Build the formatted string
-                            if ($days > 0) {
-                                $formattedDifference = "$days days ";
+                                // Build the formatted string
+                                if ($days > 0) {
+                                    $formattedDifference = "$days days ";
+                                }
+                                if ($hours > 0) {
+                                    $formattedDifference .= "$hours hours ";
+                                }
+                                if ($minutes > 0) {
+                                    $formattedDifference .= "$minutes minutes";
+                                }
+                            } catch (Exception $e) {
+                                // echo 'Error: ' . $e->getMessage(); // Handle any DateTime parsing exceptions here
                             }
-                            if ($hours > 0) {
-                                $formattedDifference .= "$hours hours ";
-                            }
-                            if ($minutes > 0) {
-                                $formattedDifference .= "$minutes minutes";
-                            }
-                        } catch (Exception $e) {
-                            // echo 'Error: ' . $e->getMessage(); // Handle any DateTime parsing exceptions here
+                        } else {
+                            echo 'something in else';
                         }
-                    }
-else{
-    echo 'something in else' ; 
-}
 
                         $bank = $row['Bank'];
                         $live_date = $row['live_date'];

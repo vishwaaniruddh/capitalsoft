@@ -89,6 +89,9 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 		button {
 			text-transform: uppercase;
 		}
+		td{
+			white-space:nowrap;
+		}
 	</style>
 
 	<!--wrapper-->
@@ -370,32 +373,33 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 								<i class="bx bx-radio-circle"> </i> CAMS UPS Report </a>
 						</li>
 						<li>
-							<a href="CCILHealthCheckUpReport.html">
+						<a href="<?php echo $base_url . $folder . 'reports/CCILHealthCheckUpReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> CCILHealth Check Up </a>
 						</li>
 						<li>
-							<a href="India1HealthCheckUpReport.html">
+						<a href="<?php echo $base_url . $folder . 'reports/India1HealthCheckUpReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> India 1 Health Check Up </a>
 						</li>
 						<li>
-							<a href="AxisHealthCheckUpReport.html">
+						<a href="<?php echo $base_url . $folder . 'reports/AxisHealthCheckUpReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> Axis Health Check Up </a>
 						</li>
 						<li>
-							<a href="KJSBHealthCheckUpReport.html">
+						<a href="<?php echo $base_url . $folder . 'reports/KJSBHealthCheckUpReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> KJSB Health Check Up </a>
 						</li>
 						<li>
-							<a href="WriterSafeGuardHealthCheckUpReport.html">
+						
+						<a href="<?php echo $base_url . $folder . 'reports/WriterSafeGuardHealthCheckUpReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> Writer SafeGuard Health Check Up </a>
 						</li>
-						<li>
+						<!-- <li>
 							<a href="FinoBank_HealthCheckUpReport.html">
 								<i class="bx bx-radio-circle"> </i> Fino Bank Health CheckUp </a>
-						</li>
+						</li> -->
 						<li>
-							<a href="PanelUP_Down_Report.html">
-								<i class="bx bx-radio-circle"> </i> Panel UP Down </a>
+							<a href="<?php echo $base_url . $folder . 'reports/PanelUP_Down_Report.php'; ?>">
+								<i class="bx bx-radio-circle"> </i> Panel Up Down </a>
 						</li>
 						<li>
 							<a href="HK_CRA_ATMO_Report.html">
@@ -405,12 +409,13 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 							<a href="ListSiteReport.html">
 								<i class="bx bx-radio-circle"> </i> Site Master Report </a>
 						</li>
-						<li>
+						<!-- <li>
 							<a href="SBI_HitachiHealthCheckUpReport.html">
 								<i class="bx bx-radio-circle"> </i> Sbi Hitachi Health CheckUp </a>
-						</li>
+						</li> -->
 						<li>
-							<a href="CNSHealthCheckUpReport.html">
+						<a href="<?php echo $base_url . $folder . 'reports/CNSHealthCheckUpReport.php'; ?>">
+							
 								<i class="bx bx-radio-circle"> </i> CNS Health CheckUp </a>
 						</li>
 						<li>
