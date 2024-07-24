@@ -33,8 +33,8 @@ if ($project == "1" || $project == "10") {
 
 	$ATMID = $_REQUEST['AddSite_ATMID'];
 	$ATMID_2 = $_REQUEST['AddSite_ATMID_2'];
-	$ATMID_3 = $_REQUEST['AddSite_ATMID_3'];
-	$ATMID_4 = $_REQUEST['AddSite_ATMID_4'];
+	$ATMID_3 = '';
+	$ATMID_4 = '';
 	$TrackerNo = $_REQUEST['AddSite_TrackerNo'];
 	$ATMShortName = $_REQUEST['AddSite_ATMShortName'];
 	$SiteAddress = $_REQUEST['AddSite_SiteAddress'];
@@ -140,8 +140,8 @@ if ($project == "1" || $project == "10") {
 		echo "<script>alert('Error : Duplicate Site ! ')</script>";
 	} else {
 
-		echo $sql = "insert into sites(Status,Phase,Customer,Bank,ATMID,ATMID_2,ATMID_3,ATMID_4,TrackerNo,ATMShortName,SiteAddress,City,State,Zone,Panel_Make,OldPanelID,NewPanelID,DVRIP,DVRName,UserName,Password,live,current_dt,mailreceive_dt,eng_name,addedby,site_remark,DVR_Model_num,Router_Model_num,PanelIP,CTS_LocalBranch,RouterIp,last_modified,installationDate)
-values('$Status','$Phase','$Customer','$Bank','$ATMID','$ATMID_2','$ATMID_3','$ATMID_4','$TrackerNo','$ATMShortName','$SiteAddress','$City','" . $fetch[0] . "','$Zone','$Panel_Make','$OldPanelID','$NewPanelID','$DVRIP[0]','$DVRName[0]','$UserName[0]','$Password[0]','P','$curentdt','$instdt.$t','$engname','" . $_SESSION['name'] . "','$remark','$DVR_Model_num','$Router_Model_num','$PanelsIP','$CtsLocalBranch','$RouterIP',1,'" . $installationDate . "')";
+		echo $sql = "insert into sites(Status,Phase,Customer,Bank,ATMID,ATMID_2,TrackerNo,ATMShortName,SiteAddress,City,State,Zone,Panel_Make,OldPanelID,NewPanelID,DVRIP,DVRName,UserName,Password,live,current_dt,mailreceive_dt,eng_name,addedby,site_remark,DVR_Model_num,Router_Model_num,PanelIP,CTS_LocalBranch,RouterIp,last_modified,installationDate)
+values('$Status','$Phase','$Customer','$Bank','$ATMID','$ATMID_2','$TrackerNo','$ATMShortName','$SiteAddress','$City','" . $fetch[0] . "','$Zone','$Panel_Make','$OldPanelID','$NewPanelID','$DVRIP[0]','$DVRName[0]','$UserName[0]','$Password[0]','P','$curentdt','$instdt.$t','$engname','" . $_SESSION['name'] . "','$remark','$DVR_Model_num','$Router_Model_num','$PanelsIP','$CtsLocalBranch','$RouterIP',1,'" . $installationDate . "')";
 		//echo $sql;
 		$result2 = mysqli_query($conn, $sql);
 		$last2 = mysqli_insert_id($conn);
@@ -164,8 +164,8 @@ values('$Status','$Phase','$Customer','$Bank','$ATMID','$ATMID_2','$ATMID_3','$A
 			$sql2 = "insert into site_Attachment(site_id,mail_attachment) values('" . $last2 . "','" . $newname . "')";
 			$result2 = mysqli_query($conn, $sql2);
 
-			$sql3 = "insert into sites_log(Status,Phase,Customer,Bank,ATMID,ATMID_2,ATMID_3,ATMID_4,TrackerNo,ATMShortName,SiteAddress,City,State,Zone,Panel_Make,OldPanelID,NewPanelID,DVRIP,DVRName,UserName,Password,live,current_dt,mailreceive_dt,eng_name,addedby,site_remark,site_id)
-values('$Status','$Phase','$Customer','$Bank','$ATMID','$ATMID_2','$ATMID_3','$ATMID_4','$TrackerNo','$ATMShortName','$SiteAddress','$City','" . $fetch[0] . "','$Zone','$Panel_Make','$OldPanelID','$NewPanelID','$DVRIP[0]','$DVRName[0]','$UserName[0]','$Password[0]','P','$curentdt','$instdt.$t','$engname','" . $_SESSION['name'] . "','$remark','" . $last2 . "')";
+			$sql3 = "insert into sites_log(Status,Phase,Customer,Bank,ATMID,ATMID_2,TrackerNo,ATMShortName,SiteAddress,City,State,Zone,Panel_Make,OldPanelID,NewPanelID,DVRIP,DVRName,UserName,Password,live,current_dt,mailreceive_dt,eng_name,addedby,site_remark,site_id)
+values('$Status','$Phase','$Customer','$Bank','$ATMID','$ATMID_2','$TrackerNo','$ATMShortName','$SiteAddress','$City','" . $fetch[0] . "','$Zone','$Panel_Make','$OldPanelID','$NewPanelID','$DVRIP[0]','$DVRName[0]','$UserName[0]','$Password[0]','P','$curentdt','$instdt.$t','$engname','" . $_SESSION['name'] . "','$remark','" . $last2 . "')";
 			$result3 = mysqli_query($conn, $sql3);
 
 			$sql4 = "insert into esurvsites(ATM_ID,TwoWayNumber) values('" . $ATMID . "','" . $GSM . "')";
@@ -193,8 +193,8 @@ values('$Status','$Phase','$Customer','$Bank','$ATMID','$ATMID_2','$ATMID_3','$A
 	$Bank = $_REQUEST['AddDVR_Bank'];
 	$ATMID = $_REQUEST['AddDVR_ATMID'];
 	$ATMID_2 = $_REQUEST['AddDVR_ATMID_2'];
-	$ATMID_3 = $_REQUEST['AddDVR_ATMID_3'];
-	$ATMID_4 = $_REQUEST['AddDVR_ATMID_4'];
+	$ATMID_3 = '';
+	$ATMID_4 = '';
 	$TrackerNo = $_REQUEST['AddDVR_TrackerNo'];
 	$ATMShortName = $_REQUEST['AddDVR_ATMShortName'];
 	$SiteAddress = $_REQUEST['AddDVR_SiteAddress'];
@@ -203,9 +203,9 @@ values('$Status','$Phase','$Customer','$Bank','$ATMID','$ATMID_2','$ATMID_3','$A
 	$CTS_Password = $_REQUEST['AddDVR_Password'];
 	$State = $_REQUEST['AddDVR_State'];
 	$Zone = $_REQUEST['AddDVR_Zone'];
-	$CTSLocalBranch = $_REQUEST['AddDVR_LocalBranch'];
-	$CTS_BM_Name = $_REQUEST['AddDVR_BM_Name'];
-	$CTS_BM_Number = $_REQUEST['AddDVR_BM_Number'];
+	$CTSLocalBranch = '';
+	$CTS_BM_Name = '';
+	$CTS_BM_Number = '';
 	$install_Status = $_REQUEST['AddDVR_install_Status'];
 	$Cloud_engineerName = $_REQUEST['Cloud_engineerName'];
 	$Cloud_livesnapshots = $_REQUEST['Cloud_livesnapshots'];
@@ -237,16 +237,8 @@ values('$Status','$Phase','$Customer','$Bank','$ATMID','$ATMID_2','$ATMID_3','$A
 	} else {
 
 
- 		$sql = "insert into dvrsite(Status,Phase,Customer,Bank,ATMID,ATMID_2,ATMID_3,ATMID_4,TrackerNo,ATMShortName,SiteAddress,City,State,Zone,UserName,Password,live,current_dt,mailreceive_dt,addedby,site_remark,DVR_Model_num,DVR_Serial_num,HDD,Camera1,Camera2,Camera3,Attachment1,Attachment2,CTSLocalBranch,CTS_BM_Name,CTS_BM_Number,install_Status,last_modified,installationDate,old_atmid)
-values('$Status','$Phase','$Customer','$Bank','$ATMID','$ATMID_2','$ATMID_3','$ATMID_4','$TrackerNo','$ATMShortName','$SiteAddress','$City','" . $fetch[0] . "','$Zone','" . $CTS_UserName . "','" . $CTS_Password . "','P','$curentdt','$instdt.$t','" . $_SESSION['name'] . "','','','','','','','','','','" . $CTSLocalBranch . "','" . $CTS_BM_Name . "','" . $CTS_BM_Number . "','" . $install_Status . "','$curentdt','$installationDate','$old_atmid')";
-
-
-		//$sql="insert into sitesd(Status,Phase,Customer,Bank,ATMID,ATMID_2,ATMID_3,ATMID_4,TrackerNo,ATMShortName,SiteAddress,City,State,Zone,UserName,Password,live,current_dt,mailreceive_dt,addedby,site_remark,DVR_Model_num,DVR_Serial_num,HDD,Camera1,Camera2,Camera3,Attachment1,Attachment2,CTSLocalBranch,CTS_BM_Name,CTS_BM_Number,install_Status,Project_Id)
-//values('$Status','$Phase','$Customer','$Bank','$ATMID','$ATMID_2','$ATMID_3','$ATMID_4','$TrackerNo','$ATMShortName','$SiteAddress','$City','".$fetch[0]."','$Zone','".$CTS_UserName."','".$CTS_Password."','P','$curentdt','$instdt.$t','".$_SESSION['name']."','','','','','','','','','','".$CTSLocalBranch."','".$CTS_BM_Name."','".$CTS_BM_Number."','".$install_Status."','$project')";
-//$resultcpy=mysqli_query($cn,$sql);
-
-// echo $sql ; 
-
+ 		$sql = "insert into dvrsite(Status,Phase,Customer,Bank,ATMID,ATMID_2,TrackerNo,ATMShortName,SiteAddress,City,State,Zone,UserName,Password,live,current_dt,mailreceive_dt,addedby,site_remark,DVR_Model_num,DVR_Serial_num,HDD,Camera1,Camera2,Camera3,Attachment1,Attachment2,CTSLocalBranch,CTS_BM_Name,CTS_BM_Number,install_Status,last_modified,installationDate,old_atmid)
+values('$Status','$Phase','$Customer','$Bank','$ATMID','$ATMID_2','$TrackerNo','$ATMShortName','$SiteAddress','$City','" . $fetch[0] . "','$Zone','" . $CTS_UserName . "','" . $CTS_Password . "','P','$curentdt','$instdt.$t','" . $_SESSION['name'] . "','','','','','','','','','','" . $CTSLocalBranch . "','" . $CTS_BM_Name . "','" . $CTS_BM_Number . "','" . $install_Status . "','$curentdt','$installationDate','$old_atmid')";
 		$result = mysqli_query($conn, $sql);
 
 		$last = mysqli_insert_id($conn);

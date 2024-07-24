@@ -130,29 +130,9 @@ $sql = mysqli_query($con, $statement);
         <th>Installation Engineer Name</th>
         <th>Captial Softs Engineer Name</th>
         <th>Captial Softs Engineer Number</th>
-        <th>GSM Number</th>
-        <th>RA Name</th>
-        <th>RA Number</th>
-        <th>Police Station</th>
-        <th>Police number</th>
-        <th>Fire Station Name</th>
-        <th>Fire Station number</th>
-        <th>Atm Officer Name</th>
-        <th>Atm Officer Number</th>
-        <th>atm_officer_email</th>
-        <th>zonal_co_ordinator_name</th>
-        <th>zonal_co_ordinator_number</th>
-        <th>zonal_co_ordinator_email</th>
-        <th>Bank Officer Name</th>
-        <th>Bank Officer Number</th>
-        <th>Bank Officer Email ID</th>
-        <th>CO Owner Name</th>
-        <th>CO Owner Number</th>
-        <th>CO Owner Email ID</th>
-        <th>Zonal Name</th>
-        <th>Zonal Number</th>
-        <th>Zonal Email ID</th>
-
+        <th>Two Way Number</th>
+        
+     
         <th>Site Add Date</th>
         <th>Site Add By</th>
         <th>Site Edit By</th>
@@ -328,82 +308,7 @@ while ($row = mysqli_fetch_array($sql)) {
             <?php echo $gsmfetch[0]; ?>
           </td>
         
-          <td>
-            <?php echo $row1["RA_QRT_NAME"]; ?>
-          </td>
-          <td>
-            <?php echo $row1["RA_QRT_NUMBER"]; ?>
-          </td>
-
-          <td>
-            <?php echo $row1["Policestation"]; ?>
-          </td>
-          <td>
-            <?php echo $row1["Polstnname"]; ?>
-          </td>
-
-          <td>
-            <?php echo $row1["firestation_name"]; ?>
-          </td>
-          <td>
-            <?php echo $row1["firestation_number"]; ?>
-          </td>
-
-          <td>
-            <?php echo $row1["atm_officer_name"]; ?>
-          </td>
-          <td>
-            <?php echo $row1["atm_officer_number"]; ?>
-          </td>
-
-          <td>
-            <?php echo $row1["atm_officer_email"]; ?>
-          </td>
-          <td>
-            <?php echo $row1["zonal_co_ordinator_name"]; ?>
-          </td>
-          <td>
-            <?php echo $row1["zonal_co_ordinator_number"]; ?>
-          </td>
-          <td>
-            <?php echo $row1["zonal_co_ordinator_email"]; ?>
-          </td>
-
-
-
-
-
-          <td>
-            <?php echo $row1["bank_officer_name"]; ?>
-          </td>
-          <td>
-            <?php echo $row1["bank_officer_number"]; ?>
-          </td>
-
-
-
-          <td>
-            <?php echo $row1['Bank_Officer_Email_ID']; ?>
-          </td>
-          <td>
-            <?php echo $row1['CO_Owner_Name']; ?>
-          </td>
-          <td>
-            <?php echo $row1['CO_Owner_Number']; ?>
-          </td>
-          <td>
-            <?php echo $row1['CO_Owner_Email_ID']; ?>
-          </td>
-          <td>
-            <?php echo $row1['Zonal_Name']; ?>
-          </td>
-          <td>
-            <?php echo $row1['Zonal_Number']; ?>
-          </td>
-          <td>
-            <?php echo $row1['Zonal_Email_ID']; ?>
-          </td>
-
+    
 
 
 

@@ -2,10 +2,10 @@
 include ('./config.php');
 
 // Initialize variables
-$page = isset($_POST['page']) && is_numeric($_POST['page']) ? $_POST['page'] : 1;
-$records_per_page = isset($_POST['perpg']) && in_array($_POST['perpg'], [25, 50, 75, 100]) ? $_POST['perpg'] : 10;
+$page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? $_REQUEST['page'] : 1;
+$records_per_page = isset($_REQUEST['perpg']) && in_array($_REQUEST['perpg'], [25, 50, 75, 100]) ? $_REQUEST['perpg'] : 10;
 $offset = ($page - 1) * $records_per_page;
-$customer = isset($_POST['customer']) ? $_POST['customer'] : '';
+$customer = isset($_REQUEST['customer']) ? $_REQUEST['customer'] : '';
 
 // Construct the main SQL query
 $sqlBase = "SELECT a.*, b.Customer, b.ATMID 
@@ -25,7 +25,7 @@ $sqlBase .= " ORDER BY a.createtime DESC";
 $sqlCount = mysqli_query($con, $sqlBase);
 $total_records = mysqli_num_rows($sqlCount);
 
-$sqlPagination = $sqlBase . " LIMIT $offset, $records_per_page";
+echo $sqlPagination = $sqlBase . " LIMIT $offset, $records_per_page";
 $sql = mysqli_query($con, $sqlPagination);
 
 if (mysqli_num_rows($sql) > 0) {

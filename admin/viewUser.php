@@ -28,6 +28,7 @@
                 <tbody>
                     <?php
                     $i = 1;
+                    echo 'select e.name,e.lname,l.uname,l.pwd, e.mob1,l.user_status from employee e INNER JOIN loginusers l ON e.id = l.empid order by e.id ASC' ; 
                     $citysql = mysqli_query($con, 'select e.name,e.lname,l.uname,l.pwd, e.mob1,l.user_status from employee e INNER JOIN loginusers l ON e.id = l.empid order by e.id ASC');
                     while ($cityresult = mysqli_fetch_array($citysql)) {
 

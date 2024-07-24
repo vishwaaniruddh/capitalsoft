@@ -24,16 +24,31 @@ $sqry = mysqli_query($con, $statement);
 // Create new Spreadsheet object
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
+$sheet = $spreadsheet->getActiveSheet();
+$spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 
+
+
+
+
+// var_dump($_REQUEST) ; 
+
+
+// return ; 
 
 $headerStyle = [
+    'font' => [
+        'size' => 10,
+        'bold' => true,
+        'color' => ['argb' => 'FFFFFFFF'],
+    ],
+    'alignment' => [
+        'horizontal' => Style\Alignment::HORIZONTAL_CENTER,
+        'vertical' => Style\Alignment::VERTICAL_CENTER,
+    ],
     'fill' => [
         'fillType' => Style\Fill::FILL_SOLID,
         'startColor' => ['argb' => 'FF4287f5'],
-    ],
-    'font' => [
-        'bold' => true,
-        'color' => ['argb' => 'FFFFFFFF'],
     ],
     'borders' => [
         'allBorders' => [
@@ -41,7 +56,18 @@ $headerStyle = [
         ],
     ],
 ];
-$sheet->getStyle('A1:X1')->applyFromArray($headerStyle);
+// $sheet->getStyle('A1:J1')->applyFromArray($headerStyle);
+
+$sheet->getColumnDimension('A')->setAutoSize(true);
+$sheet->getColumnDimension('B')->setAutoSize(true);
+
+$sheet->getStyle('A:T')->getAlignment()->setHorizontal('center');
+
+foreach (range('A', $sheet->getHighestColumn()) as $col) {
+    $sheet->getColumnDimension($col)->setAutoSize(true);
+ }
+ 
+
 
 $sheet->setCellValue('A1', 'ATMID');
 $sheet->setCellValue('B1', 'Bank');
@@ -102,7 +128,14 @@ while ($rowarr = mysqli_fetch_array($sqry)) {
 }
 
 
+foreach ($sheet->getColumnIterator() as $column) {
+    $sheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
+ }
 
+ 
+// foreach (range('A', $sheet->getHighestColumn()) as $col) {
+//    $sheet->getColumnDimension($col)->setAutoSize(true);
+// }
 
 
 
@@ -118,14 +151,7 @@ $highestRow = $sheet->getHighestRow();
 $highestColumn = $sheet->getHighestColumn();
 $sheet->getStyle('A1:' . $highestColumn . $highestRow)->applyFromArray($styleArray);
 
-// // Set auto width for all columns
-// foreach (range('A', $highestColumn) as $column) {
-//     $sheet->getColumnDimension($column)->setAutoSize(true);
-// }
 
-
-// return ; 
-// Set headers for download
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment;filename="exported_data.xlsx"');
 header('Cache-Control: max-age=0');

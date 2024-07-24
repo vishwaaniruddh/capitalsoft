@@ -1,13 +1,16 @@
 <?php
 include ('./config.php');
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 $atmid = $_REQUEST['atmid'];
 $customer = $_REQUEST['customer'];
 
 // Initialize variables
-$page = isset($_POST['page']) && is_numeric($_POST['page']) ? $_POST['page'] : 1;
-$records_per_page = isset($_POST['perpg']) && in_array($_POST['perpg'], [25, 50, 75, 100]) ? $_POST['perpg'] : 10;
+$page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? $_REQUEST['page'] : 1;
+$records_per_page = isset($_REQUEST['perpg']) && in_array($_REQUEST['perpg'], [25, 50, 75, 100]) ? $_REQUEST['perpg'] : 10;
 $offset = ($page - 1) * $records_per_page;
 
 // Construct the main SQL query
@@ -156,17 +159,23 @@ if (mysqli_num_rows($sql) > 0) {
 ?>
 
 <script>
-    function fetchData(page) {
-        var perpg = <?php echo $records_per_page; ?>;
-        var customer = '<?php echo addslashes($customer); ?>';
+   function fetchData(page) {
+    $('#panelDashboardAlert').html('');
+    var perpg = <?php echo $records_per_page; ?>;
+    var customer = '<?php echo addslashes($customer); ?>';
+    var atmid = '<?php echo addslashes($atmid); ?>';
+    
+    $.ajax({
+        type: "POST",
+        url: "./getPanelDashboardData_alert.php",
+        data: { page: page, perpg: perpg, customer: customer ,atmid : atmid },
+        success: function (response) {
+            $('#panelDashboardAlert').html(response);
+        },
+        error: function (xhr, status, error) {
+            console.error('Error fetching data:', error);
+        }
+    });
+}
 
-        $.ajax({
-            type: "POST",
-            url: "./part3Dashboard.php",
-            data: { page: page, perpg: perpg, customer: customer },
-            success: function (response) {
-                $("#part3Dashboard").html(response);
-            }
-        });
-    }
 </script>

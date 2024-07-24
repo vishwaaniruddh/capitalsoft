@@ -86,7 +86,7 @@ $panelOnline = $panelStatusResult['online_count'];
         </div>
     </div>
     <div class="col">
-        <div class="card radius-10 bg-gradient-ibiza">
+        <div class="card radius-10 bg-gradient-ohhappiness">
             <div class="card-body">
                 <div class="d-flex align-items-center">
                     <div class="me-auto">
@@ -101,7 +101,7 @@ $panelOnline = $panelStatusResult['online_count'];
         </div>
     </div>
     <div class="col">
-        <div class="card radius-10 bg-gradient-ohhappiness">
+        <div class="card radius-10 bg-gradient-ibiza">
             <div class="card-body">
                 <div class="d-flex align-items-center">
                     <div class="me-auto">

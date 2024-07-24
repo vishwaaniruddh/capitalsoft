@@ -30,7 +30,7 @@
 
         $.ajax({
             type: 'POST',
-            url: 'viewalert_process.php',
+            url: './viewalert_process.php',
             data: {
                 panelid: panelid,
                 ATMID: ATMID,

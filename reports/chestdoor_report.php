@@ -207,10 +207,55 @@
         </div>
 
 
-        <script src="js/dashboard.js"></script>
+<script>
+    function onload() {
+    //  get_ticketview();
+}
+$("#portal").change(function () {
+    ;
+    get_ticketview();
+});
+$("#show_detail").click(function () {
+
+    get_ticketview();
+});
+
+function get_ticketview() {
+    ;
+    var Panelid = $("#PanelID").val();
+    var Client = $("#Client").val();
+    var Bank = $("#Bank").val();
+    $('#ticketview_tbody').html('');
+
+//     if (Panelid == '') {
+// alert("PanelID Must Required !");
+//         // swal("Oops!", , "error");
+//         return false;
+//     }
+    $.ajax({
+        url: "chestdoor_report_new.php",
+        type: "GET",
+        data: { panelid: Panelid, bank: Bank, client: Client },
+        dataType: "html",
+        success: (function (result) {
+            ;
+            console.log(result);
+          
+
+            $('#ticketview_tbody').html('');
+            $('#ticketview_tbody').html(result);
+
+            $("#load").hide();
+        })
+    });
+}
+
+
+</script>
+
+<script src="js/dashboard.js"></script>
 <script src="js/client_bank_circle_atmid.js"></script>
 <script src="js/data-table.js"></script>
-<script src="js/chestdoor_report.js"></script>
 
 
 </div>

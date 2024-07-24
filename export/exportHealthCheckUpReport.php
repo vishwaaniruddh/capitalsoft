@@ -5,6 +5,10 @@ set_time_limit(0);
 include ('../config.php');
 require '../vendor/autoload.php';
 
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -17,6 +21,14 @@ $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 
+
+
+
+
+// var_dump($_REQUEST) ; 
+
+
+// return ; 
 
 $headerStyle = [
     'font' => [
@@ -48,6 +60,7 @@ $sheet->getStyle('A:AK')->getAlignment()->setHorizontal('center');
 foreach (range('A', $sheet->getHighestColumn()) as $col) {
     $sheet->getColumnDimension($col)->setAutoSize(true);
  }
+
 
 // Example usage of setCellValue
 $sheet->setCellValue('A1', 'Sr No');
@@ -90,56 +103,46 @@ $sheet->setCellValue('AK1', 'Bank');
 
 $row = 2;
 while ($rowarr = mysqli_fetch_array($sqry)) {
-   
-
     
     $atmid = $rowarr['ATMID'];
     $state = $rowarr['State'];
     $city = $rowarr['City'];
-    $recordingFrom = $rowarr['Recording From'];
-    $recordingTo = $rowarr['Recording To'];
     $bank = $rowarr['Bank'];
     $live_date = $rowarr['live_date'];
+    
+    $recordingFrom = $rowarr['Recording From'];
+    $recordingTo = $rowarr['Recording To'];
+    // $datetime1 = new DateTime($recordingFrom);
+    // $datetime2 = new DateTime($recordingTo);
 
-    $datetime1 = new DateTime($recordingFrom);
-    $datetime2 = new DateTime($recordingTo);
+    $recordingFrom = isset($rowarr['Recording From']) ? $rowarr['Recording From'] : '';
+    $recordingTo = isset($rowarr['Recording To']) ? $rowarr['Recording To'] : '';
+    
+    $formattedDifference = '-';
+    $difference_in_days = '-';
 
-    // Calculate the difference between two DateTime objects
-    $difference = $datetime1->diff($datetime2);
-    $days = $difference->days;
-    $hours = $difference->h;
-    $minutes = $difference->i;
-
-    // Build the formatted string
-    if ($days > 0) {
-        $formattedDifference = "$days days ";
+    if (!empty($recordingFrom) && !empty($recordingTo)) {
+        try {
+        // Calculate day difference 
+        $from_timestamp = strtotime($recordingFrom);
+        $to_timestamp = strtotime($recordingTo);
+        $difference_in_seconds = $to_timestamp - $from_timestamp;
+        $difference_in_days = $difference_in_seconds / 86400;
+        $difference_in_days = round($difference_in_days);
+       
+    } catch (Exception $e) {
+        // echo 'Error: ' . $e->getMessage(); // Handle any DateTime parsing exceptions here
     }
-    if ($hours > 0) {
-        $formattedDifference .= "$hours hours ";
-    }
-    if ($minutes > 0) {
-        $formattedDifference .= "$minutes minutes";
-    }
+}
 
     $SiteAddress = $rowarr['SiteAddress'];
     $ip = $rowarr['IP Address'];
     $ping_status = $rowarr['ping_status'];
     $hdd_status = $rowarr['HDD Status'];
-    $recording_from = $rowarr['Recording From'];
-    $recording_to = $rowarr['Recording To'];
-
-    // Calculate day difference 
-    $from_timestamp = strtotime($recording_from);
-    $to_timestamp = strtotime($recording_to);
-    $difference_in_seconds = $to_timestamp - $from_timestamp;
-    $difference_in_days = $difference_in_seconds / 86400;
-    $difference_in_days = round($difference_in_days);
-    // End
 
     $cam1 = $rowarr['cam1'];
     $cam2 = $rowarr['cam2'];
     $cam3 = $rowarr['cam3'];
-
 
     // Get Panel Data
     $panelsql = mysqli_query($con, "select * from panel_health where ip='" . $ip . "'");
@@ -158,8 +161,8 @@ while ($rowarr = mysqli_fetch_array($sqry)) {
     $sheet->setCellValue('G' . $row, ($panel_status == 0 ? 'Yes' : 'No')); // Main Panel functional (Y/N)
     $sheet->setCellValue('H' . $row, ($ping_status == 'Online' ? 'Working' : 'Not Working')); // DVR (W / NW)
     $sheet->setCellValue('I' . $row, $hdd_status); // Hard Disk status(W/NW)
-    $sheet->setCellValue('J' . $row, $recording_from); // Footage Start DateTime
-    $sheet->setCellValue('K' . $row, $recording_to); // Footage Stop DateTime
+    $sheet->setCellValue('J' . $row, $recordingFrom); // Footage Start DateTime
+    $sheet->setCellValue('K' . $row, $recordingTo); // Footage Stop DateTime
     $sheet->setCellValue('L' . $row, $difference_in_days); // Footage available in days
     $sheet->setCellValue('M' . $row, ucwords($cam1)); // ATM Lobby Camera (W/ NW)
     $sheet->setCellValue('N' . $row, ucwords($cam2)); // Back Room Camera (W/ NW)

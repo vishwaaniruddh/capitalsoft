@@ -23,292 +23,295 @@
 
 
     $abc = "
-	  SELECT
-      CASE
-        WHEN (s.ATMID IS NOT NULL) THEN s.ATMID
-        WHEN (ds.ATMID IS NOT NULL) THEN ds.ATMID
-        WHEN (d.atmid IS NOT NULL) THEN d.atmid
+  SELECT
+  CASE
+    WHEN (s.live_date IS NOT NULL) THEN s.live_date
+    WHEN (ds.liveDate IS NOT NULL) THEN ds.liveDate
+    ELSE o.`Live Date`
+  END AS live_date,
 
-        ELSE o.ATMID
-      END AS ATMID,
-      CASE
-        WHEN (s.Bank IS NOT NULL) THEN s.Bank
-        WHEN (ds.Bank IS NOT NULL) THEN ds.Bank
-        ELSE o.Bank
-      END AS Bank,
-      CASE
-        WHEN (s.Customer IS NOT NULL) THEN s.Customer
-        WHEN (ds.Customer IS NOT NULL) THEN ds.Customer
-        ELSE o.Customer
-      END AS Customer,
-      CASE
-        WHEN (s.City IS NOT NULL) THEN s.City
-        WHEN (ds.City IS NOT NULL) THEN ds.City
-        ELSE o.city
-      END AS City,
-      CASE
-          WHEN (s.State IS NOT NULL) THEN s.State
-          WHEN (ds.State IS NOT NULL) THEN ds.State
-          ELSE o.State
-          END AS State,
-      CASE
-        WHEN (s.Zone IS NOT NULL) THEN s.Zone
-        WHEN (ds.Zone IS NOT NULL) THEN ds.Zone
-        ELSE o.zone
-      END AS Zone,    
-      CASE
-        WHEN (s.SiteAddress IS NOT NULL) THEN s.SiteAddress
-        WHEN (ds.SiteAddress IS NOT NULL) THEN ds.SiteAddress
-        ELSE o.Address
-      END AS SiteAddress,
-      CASE
-        WHEN (s.project IS NOT NULL) THEN s.project
-        WHEN (ds.project IS NOT NULL) THEN ds.project
-        ELSE o.project
-      END AS 'Project',
- 
+  s.NewPanelID,
+  s.Panel_Make,
+  CASE
+    WHEN (s.ATMID IS NOT NULL) THEN s.ATMID
+    WHEN (ds.ATMID IS NOT NULL) THEN ds.ATMID
+    WHEN (d.atmid IS NOT NULL) THEN d.atmid
 
-      d.IPAddress as 'IP Address',
-      d.dvrname as 'DVR Name',
-      
+    ELSE o.ATMID
+  END AS ATMID,
+  CASE
+    WHEN (s.Bank IS NOT NULL) THEN s.Bank
+    WHEN (ds.Bank IS NOT NULL) THEN ds.Bank
+    ELSE o.Bank
+  END AS Bank,
+  CASE
+    WHEN (s.Customer IS NOT NULL) THEN s.Customer
+    WHEN (ds.Customer IS NOT NULL) THEN ds.Customer
+    ELSE o.Customer
+  END AS Customer,
+  CASE
+    WHEN (s.City IS NOT NULL) THEN s.City
+    WHEN (ds.City IS NOT NULL) THEN ds.City
+    ELSE o.city
+  END AS City,
+  CASE
+      WHEN (s.State IS NOT NULL) THEN s.State
+      WHEN (ds.State IS NOT NULL) THEN ds.State
+      ELSE o.State
+      END AS State,
+  CASE
+    WHEN (s.Zone IS NOT NULL) THEN s.Zone
+    WHEN (ds.Zone IS NOT NULL) THEN ds.Zone
+    ELSE o.zone
+  END AS Zone,    
+  CASE
+    WHEN (s.SiteAddress IS NOT NULL) THEN s.SiteAddress
+    WHEN (ds.SiteAddress IS NOT NULL) THEN ds.SiteAddress
+    ELSE o.Address
+  END AS SiteAddress,
+  CASE
+    WHEN (s.project IS NOT NULL) THEN s.project
+    WHEN (ds.project IS NOT NULL) THEN ds.project
+    ELSE o.project
+  END AS 'Project',
+
+
+  d.IPAddress as 'IP Address',
+  d.dvrname as 'DVR Name',
+  
 
 (CASE
-      WHEN d.status = 1 THEN 'Online'
-      ELSE 'Offline'
-  END) AS ping_status,
-  DATE_FORMAT(d.last_communication, '%Y-%m-%d %H:%i:%s') AS last_communication,
+  WHEN d.status = 1 THEN 'Online'
+  ELSE 'Offline'
+END) AS ping_status,
+DATE_FORMAT(d.last_communication, '%Y-%m-%d %H:%i:%s') AS last_communication,
 
-      CASE
-            WHEN DATE(d.cdate) = CURDATE() AND (d.login_status = 0) THEN 'Online'
-            ELSE 'Offline'
-      END AS 'Network Status',
-      CASE
-      WHEN DATE(d.cdate) = CURDATE() AND d.login_status = 0 THEN
-          CASE
-              WHEN d.latency = '' THEN '-'
-              WHEN d.latency IS NULL THEN '-'
-              ELSE d.latency
-          END
-      ELSE '-'
-  END AS 'Latency',
-      
-      CASE
-      WHEN DATE(d.cdate) = CURDATE() AND d.login_status = 0 THEN
-            CASE
-                WHEN d.status = 1 THEN 'Online'
-                ELSE 'Offline'
-            END
-          ELSE 'Offline'
-      END AS 'DVR Status',
-
-
-      DATE_FORMAT(d.cdate, '%d-%m-%Y %H:%i:%s') AS 'Current Date',
-      CASE
-          WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN '00-00-0000 00:00:00'
-          ELSE DATE_FORMAT(d.dvr_time, '%d-%m-%Y %H:%i:%s')
-      END AS 'DVR Time',
-
-        CASE 
-        WHEN d.dvr_time IS NOT NULL THEN 
-            CASE 
-                WHEN d.cdate >= d.dvr_time THEN
-                    CONCAT(
-                        FLOOR(TIMESTAMPDIFF(SECOND, d.dvr_time, d.cdate) / 3600), ':',
-                        LPAD(FLOOR(TIMESTAMPDIFF(SECOND, d.dvr_time, d.cdate) % 3600 / 60), 2, '0'), ':',
-                        LPAD(TIMESTAMPDIFF(SECOND, d.dvr_time, d.cdate) % 60, 2, '0')
-                    )
-                ELSE
-                    CONCAT(
-                        '-', FLOOR(TIMESTAMPDIFF(SECOND, d.cdate, d.dvr_time) / 3600), ':',
-                        LPAD(FLOOR(TIMESTAMPDIFF(SECOND, d.cdate, d.dvr_time) % 3600 / 60), 2, '0'), ':',
-                        LPAD(TIMESTAMPDIFF(SECOND, d.cdate, d.dvr_time) % 60, 2, '0')
-                    )
-            END
-        ELSE '00:00:00'
-    END AS 'Time Difference' ,
-      
-      CASE
-      WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN '-'
-      WHEN (d.cam1 = '') THEN 'Not Available'
-      WHEN (d.cam1 IS NULL) THEN 'Not Available'
-      WHEN (d.login_status = 1) THEN 'Not Available'
-      ELSE  d.cam1 
-      END AS cam1,
-
-      CASE
-      WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN '-'
-      WHEN (d.cam2 = '') THEN 'Not Available'
-      WHEN (d.cam2 IS NULL) THEN 'Not Available'
-      WHEN (d.login_status = 1) THEN 'Not Available'
-      ELSE  d.cam2
-      END AS cam2
-      ,
-
-      CASE
-      WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN '-'
-      WHEN (d.cam3 = '') THEN 'Not Available'
-      WHEN (d.cam3 IS NULL) THEN 'Not Available'
-      WHEN (d.login_status = 1) THEN 'Not Available'
-      ELSE  d.cam3
-      END AS cam3 ,
-
-      CASE
-      WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN '-'
-      WHEN (d.cam4 = '') THEN 'Not Available'
-      WHEN (d.cam4 IS NULL) THEN 'Not Available'
-      WHEN (d.login_status = 1) THEN 'Not Available'
-      ELSE  d.cam4
-      END AS cam4
-      ,
-        
-     
   CASE
-  WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN '-'
-  WHEN (
-      STR_TO_DATE(d.recording_to, '%d - %m - %Y') = CURDATE() 
-      OR DATE_FORMAT(d.recording_to, '%Y-%m-%d') = CURDATE()
-      OR STR_TO_DATE(d.recording_to, '%Y- %m- %d') = CURDATE()
-  ) THEN 'Working'
-  ELSE 'Not Working'
-END AS 'HDD Status'
-    ,
+        WHEN DATE(d.cdate) = CURDATE() AND (d.login_status = 0) THEN 'Online'
+        ELSE 'Offline'
+  END AS 'Network Status',
+  CASE
+  WHEN DATE(d.cdate) = CURDATE() AND d.login_status = 0 THEN
+      CASE
+          WHEN d.latency = '' THEN '-'
+          WHEN d.latency IS NULL THEN '-'
+          ELSE d.latency
+      END
+  ELSE '-'
+END AS 'Latency',
+  
+  CASE
+  WHEN DATE(d.cdate) = CURDATE() AND d.login_status = 0 THEN
+        CASE
+            WHEN d.status = 1 THEN 'Online'
+            ELSE 'Offline'
+        END
+      ELSE 'Offline'
+  END AS 'DVR Status',
 
+
+  DATE_FORMAT(d.cdate, '%d-%m-%Y %H:%i:%s') AS 'Current Date',
+  CASE
+      WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN '00-00-0000 00:00:00'
+      ELSE DATE_FORMAT(d.dvr_time, '%d-%m-%Y %H:%i:%s')
+  END AS 'DVR Time',
+
+    CASE 
+    WHEN d.dvr_time IS NOT NULL THEN 
+        CASE 
+            WHEN d.cdate >= d.dvr_time THEN
+                CONCAT(
+                    FLOOR(TIMESTAMPDIFF(SECOND, d.dvr_time, d.cdate) / 3600), ':',
+                    LPAD(FLOOR(TIMESTAMPDIFF(SECOND, d.dvr_time, d.cdate) % 3600 / 60), 2, '0'), ':',
+                    LPAD(TIMESTAMPDIFF(SECOND, d.dvr_time, d.cdate) % 60, 2, '0')
+                )
+            ELSE
+                CONCAT(
+                    '-', FLOOR(TIMESTAMPDIFF(SECOND, d.cdate, d.dvr_time) / 3600), ':',
+                    LPAD(FLOOR(TIMESTAMPDIFF(SECOND, d.cdate, d.dvr_time) % 3600 / 60), 2, '0'), ':',
+                    LPAD(TIMESTAMPDIFF(SECOND, d.cdate, d.dvr_time) % 60, 2, '0')
+                )
+        END
+    ELSE '00:00:00'
+END AS 'Time Difference' ,
+  
+  CASE
+  WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN 'Not Working'
+  WHEN (d.cam1 = '') THEN 'Not Working'
+  WHEN (d.cam1 IS NULL) THEN 'Not Working'
+  WHEN (d.login_status = 1) THEN 'Not Working'
+  ELSE  d.cam1 
+  END AS cam1,
+  
+    CASE
+  WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN 'Not Working'
+  WHEN (d.cam2 = '') THEN 'Not Working'
+  WHEN (d.cam2 IS NULL) THEN 'Not Working'
+  WHEN (d.login_status = 1) THEN 'Not Working'
+  ELSE  d.cam2 
+  END AS cam2,
 
     CASE
-    WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN '-'
-    WHEN COALESCE(d.recording_from, '') = '' THEN '-'
-    WHEN d.recording_from LIKE '%T%Z' THEN
-        DATE_FORMAT(
-            STR_TO_DATE(
-                d.recording_from,
-                '%Y-%m-%dT%H:%i:%sZ'
-            ),
-            '%d-%m-%Y %H:%i:%s'
-        )
-        WHEN d.recording_from REGEXP '^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$' THEN
-        DATE_FORMAT(
-          STR_TO_DATE(
-              d.recording_from,
-              '%Y-%m-%d %H:%i:%s'
-          ),
-          '%d-%m-%Y %H:%i:%s'
-      )
-    WHEN d.recording_from REGEXP '^[0-9]{4}- [0-9]{1,2}-[0-9]{1,2}$' THEN
-        DATE_FORMAT(
-            STR_TO_DATE(
-                d.recording_from,
-                '%Y- %m-%d'
-            ),
-            '%d-%m-%Y %H:%i:%s'
-        )
-        WHEN d.recording_from REGEXP '^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$' THEN
-        DATE_FORMAT(
-            STR_TO_DATE(
-                d.recording_from,
-                '%Y-%m-%d'
-            ),
-            '%d-%m-%Y %H:%i:%s'
-        )
-    WHEN d.recording_from REGEXP '^[0-9]{1,2} - [0-9]{1,2} - [0-9]{4}$' THEN
-        DATE_FORMAT(
-            STR_TO_DATE(
-                d.recording_from,
-                '%d - %m - %Y'
-            ),
-            '%d-%m-%Y %H:%i:%s'
-        )
-    WHEN d.recording_from REGEXP '^[0-9]{1,2}-[0-9]{1,2}-[0-9]{4}$' THEN
-        DATE_FORMAT(
-            STR_TO_DATE(
-                d.recording_from,
-                '%d-%m-%Y'
-            ),
-            '%d-%m-%Y %H:%i:%s'
-        )
-    ELSE '-'
+  WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN 'Not Working'
+  WHEN (d.cam3 = '') THEN 'Not Working'
+  WHEN (d.cam3 IS NULL) THEN 'Not Working'
+  WHEN (d.login_status = 1) THEN 'Not Working'
+  ELSE  d.cam3 
+  END AS cam3,
+
+
+
+  CASE
+  WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN '-'
+  WHEN (d.cam4 = '') THEN 'Not Available'
+  WHEN (d.cam4 IS NULL) THEN 'Not Available'
+  WHEN (d.login_status = 1) THEN 'Not Available'
+  ELSE  d.cam4
+  END AS cam4
+  ,
+    
+ 
+CASE
+WHEN d.hdd IN('Yes','Normal','ok') THEN 'Working'
+ELSE 'Not Working'
+END AS 'HDD Status'
+,
+
+
+CASE
+WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN '-'
+WHEN COALESCE(d.recording_from, '') = '' THEN '-'
+WHEN d.recording_from LIKE '%T%Z' THEN
+    DATE_FORMAT(
+        STR_TO_DATE(
+            d.recording_from,
+            '%Y-%m-%dT%H:%i:%sZ'
+        ),
+        '%d-%m-%Y %H:%i:%s'
+    )
+    WHEN d.recording_from REGEXP '^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$' THEN
+    DATE_FORMAT(
+      STR_TO_DATE(
+          d.recording_from,
+          '%Y-%m-%d %H:%i:%s'
+      ),
+      '%d-%m-%Y %H:%i:%s'
+  )
+WHEN d.recording_from REGEXP '^[0-9]{4}- [0-9]{1,2}-[0-9]{1,2}$' THEN
+    DATE_FORMAT(
+        STR_TO_DATE(
+            d.recording_from,
+            '%Y- %m-%d'
+        ),
+        '%d-%m-%Y %H:%i:%s'
+    )
+    WHEN d.recording_from REGEXP '^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$' THEN
+    DATE_FORMAT(
+        STR_TO_DATE(
+            d.recording_from,
+            '%Y-%m-%d'
+        ),
+        '%d-%m-%Y %H:%i:%s'
+    )
+WHEN d.recording_from REGEXP '^[0-9]{1,2} - [0-9]{1,2} - [0-9]{4}$' THEN
+    DATE_FORMAT(
+        STR_TO_DATE(
+            d.recording_from,
+            '%d - %m - %Y'
+        ),
+        '%d-%m-%Y %H:%i:%s'
+    )
+WHEN d.recording_from REGEXP '^[0-9]{1,2}-[0-9]{1,2}-[0-9]{4}$' THEN
+    DATE_FORMAT(
+        STR_TO_DATE(
+            d.recording_from,
+            '%d-%m-%Y'
+        ),
+        '%d-%m-%Y %H:%i:%s'
+    )
+ELSE '-'
 END AS 'Recording From',
 
 CASE
-    WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN '-'
-    WHEN COALESCE(d.recording_to, '') = '' THEN '-'
-    WHEN d.recording_to LIKE '%T%Z' THEN
-        DATE_FORMAT(
-            STR_TO_DATE(
-                d.recording_to,
-                '%Y-%m-%dT%H:%i:%sZ'
-            ),
-            '%d-%m-%Y %H:%i:%s'
-        )
-        WHEN d.recording_to REGEXP '^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$' THEN
-        DATE_FORMAT(
-          STR_TO_DATE(
-              d.recording_to,
-              '%Y-%m-%d %H:%i:%s'
-          ),
-          '%d-%m-%Y %H:%i:%s'
-      )
+WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN '-'
+WHEN COALESCE(d.recording_to, '') = '' THEN '-'
+WHEN d.recording_to LIKE '%T%Z' THEN
+    DATE_FORMAT(
+        STR_TO_DATE(
+            d.recording_to,
+            '%Y-%m-%dT%H:%i:%sZ'
+        ),
+        '%d-%m-%Y %H:%i:%s'
+    )
+    WHEN d.recording_to REGEXP '^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$' THEN
+    DATE_FORMAT(
+      STR_TO_DATE(
+          d.recording_to,
+          '%Y-%m-%d %H:%i:%s'
+      ),
+      '%d-%m-%Y %H:%i:%s'
+  )
 
-    WHEN d.recording_to REGEXP '^[0-9]{1,2} - [0-9]{1,2} - [0-9]{4}$' THEN
-        DATE_FORMAT(
-            STR_TO_DATE(
-                d.recording_to,
-                '%d - %m - %Y'
-            ),
-            '%d-%m-%Y %H:%i:%s'
-        )
-    WHEN d.recording_to REGEXP '^[0-9]{4}- [0-9]{1,2}-[0-9]{1,2}$' THEN
-        DATE_FORMAT(
-            STR_TO_DATE(
-                d.recording_to,
-                '%Y- %m-%d'
-            ),
-            '%d-%m-%Y %H:%i:%s'
-        )
-        WHEN d.recording_to REGEXP '^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$' THEN
-        DATE_FORMAT(
-            STR_TO_DATE(
-                d.recording_to,
-                '%Y-%m-%d'
-            ),
-            '%d-%m-%Y %H:%i:%s'
-        )
-    WHEN d.recording_to REGEXP '^[0-9]{1,2}-[0-9]{1,2}-[0-9]{4}$' THEN
-        DATE_FORMAT(
-            STR_TO_DATE(
-                d.recording_to,
-                '%d-%m-%Y'
-            ),
-            '%d-%m-%Y %H:%i:%s'
-        )
-    ELSE '-'
+WHEN d.recording_to REGEXP '^[0-9]{1,2} - [0-9]{1,2} - [0-9]{4}$' THEN
+    DATE_FORMAT(
+        STR_TO_DATE(
+            d.recording_to,
+            '%d - %m - %Y'
+        ),
+        '%d-%m-%Y %H:%i:%s'
+    )
+WHEN d.recording_to REGEXP '^[0-9]{4}- [0-9]{1,2}-[0-9]{1,2}$' THEN
+    DATE_FORMAT(
+        STR_TO_DATE(
+            d.recording_to,
+            '%Y- %m-%d'
+        ),
+        '%d-%m-%Y %H:%i:%s'
+    )
+    WHEN d.recording_to REGEXP '^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$' THEN
+    DATE_FORMAT(
+        STR_TO_DATE(
+            d.recording_to,
+            '%Y-%m-%d'
+        ),
+        '%d-%m-%Y %H:%i:%s'
+    )
+WHEN d.recording_to REGEXP '^[0-9]{1,2}-[0-9]{1,2}-[0-9]{4}$' THEN
+    DATE_FORMAT(
+        STR_TO_DATE(
+            d.recording_to,
+            '%d-%m-%Y'
+        ),
+        '%d-%m-%Y %H:%i:%s'
+    )
+ELSE '-'
 END AS 'Recording To',
 
-      CASE
-      WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN 'Stop'
-        WHEN (
-          STR_TO_DATE(d.recording_to, '%d - %m - %Y') = CURDATE() 
-          OR DATE_FORMAT(d.recording_to, '%Y-%m-%d') = CURDATE()
-          OR STR_TO_DATE(d.recording_to, '%Y- %m- %d') = CURDATE()
-        ) 
-         THEN 'Running'
-        ELSE 'Stop'
-      END AS 'Recording To Status'
-      
+  CASE
+  WHEN d.dvr_time = '' OR d.dvr_time IS NULL THEN 'Stop'
+    WHEN (
+      STR_TO_DATE(d.recording_to, '%d - %m - %Y') = CURDATE() 
+      OR DATE_FORMAT(d.recording_to, '%Y-%m-%d') = CURDATE()
+      OR STR_TO_DATE(d.recording_to, '%Y- %m- %d') = CURDATE()
+    ) 
+     THEN 'Running'
+    ELSE 'Stop'
+  END AS 'Recording To Status'
+  
 
 
-      
-      FROM
-      all_dvr_live d
-      LEFT JOIN
-      sites s ON d.IPAddress = s.DVRIP
-    LEFT JOIN
-      dvronline o ON d.IPAddress = o.IPAddress  
-    LEFT JOIN
-      dvrsite ds ON d.IPAddress = ds.DVRIP   
-      WHERE
-        d.live = 'Y' 
-        AND 
-        s.live='Y'
+  
+  FROM
+  all_dvr_live d
+  LEFT JOIN
+  sites s ON d.IPAddress = s.DVRIP AND s.live='Y'
+LEFT JOIN
+  dvronline o ON d.IPAddress = o.IPAddress  
+LEFT JOIN
+  dvrsite ds ON d.IPAddress = ds.DVRIP AND ds.live='Y'
+  WHERE
+    d.live = 'Y' 
+
 
 		";
 
@@ -403,7 +406,7 @@ END AS 'Recording To',
 
 
                 <h6 class="mb-0 text-uppercase">Total Records : <?php echo $total_records; ?></h6>
-                <form action="./exportdvrReport.php" method="POST">
+                <form action="../export/exportHealthCheckUpReport.php" method="POST">
                     <input type="hidden" name="exportsql" value="<?php echo $withoutLimitsql; ?>">
                     <button type="submit" class="btn btn-outline-info btn-sm px-5 radius-30"><i
                             class="bx bx-cloud-download mr-1"></i>Export</button>
@@ -426,7 +429,6 @@ END AS 'Recording To',
                         <th>TIME DIFF (HH:MM)</th>
                         <th>LAST COMMUNICATION</th>
                         <th>DOWN SINCE (Days)</th>
-                        <th>AGING (Days)</th>
                         <th>DVR NAME</th>
                         <th>IP</th>
                         <th>HDD DB</th>
@@ -436,6 +438,7 @@ END AS 'Recording To',
 
                         <th>REC FROM</th>
                         <th>REC TO</th>
+                        <th>AGING (Days)</th>
                         <th>Site Type</th>
                         <th>REFRESH</th>
                         <th>CITY</th>
@@ -451,6 +454,39 @@ END AS 'Recording To',
                     while ($row = mysqli_fetch_array($result)) {
 
 
+                        $difference = '-' ;
+                        $ping_status = $row['ping_status'] ; 
+                        if($ping_status=='Offline'){
+
+                            $oldestofflineDate = mysqli_fetch_assoc(mysqli_query($con,"SELECT  cdate
+                            FROM dvr_history
+                            WHERE id > (
+                                SELECT MAX(id)
+                                FROM dvr_history
+                                WHERE login_status = 0 AND status = 1 AND `ip` LIKE '172.16.12.151'
+                            )
+                            AND login_status != 0 AND `ip` LIKE '172.16.12.151'")) ;
+                            $lastofflineRecord = $oldestofflineDate['cdate'];
+                            $currentDate = $row['Current Date'] ; 
+                            $oldestTimestamp = strtotime($lastofflineRecord);
+                            $currentTimestamp = strtotime($currentDate);
+                            
+                            // Calculate difference in seconds
+                            $difference = $currentTimestamp - $oldestTimestamp;
+                            
+                            // Convert difference to days, hours, and minutes
+                            $days = floor($difference / (60 * 60 * 24));
+                            $hours = floor(($difference - ($days * 60 * 60 * 24)) / (60 * 60));
+                            $minutes = floor(($difference - ($days * 60 * 60 * 24) - ($hours * 60 * 60)) / 60);
+                            
+                            // Output the difference
+                            $difference = "$days days, $hours hours, $minutes minutes";
+                            
+
+                        }
+ 
+
+
                         ?>
                         <tr>
                             <td><?php echo $i; ?></td>
@@ -464,8 +500,7 @@ END AS 'Recording To',
                             <td><?php echo $row['Time Difference']; ?></td>
                             <td><?php echo $row['last_communication']; ?></td>
 
-                            <td>DOWN SINCE (Days)</td>
-                            <td>AGING (Days)</td>
+                            <td><?php echo $difference ; ?></td>
                             <td><?php echo $row['DVR Name']; ?></td>
                             <td><?php echo $row['IP Address']; ?></td>
                             <td><?php echo $row['HDD Status']; ?></td>
@@ -530,6 +565,32 @@ END AS 'Recording To',
 
                             <td><?php echo $row['Recording From']; ?></td>
                             <td><?php echo $row['Recording To']; ?></td>
+<?php 
+
+$recordingFrom = isset($row['Recording From']) ? $row['Recording From'] : '';
+$recordingTo = isset($row['Recording To']) ? $row['Recording To'] : '';
+
+    $difference_in_days = '-';
+
+    if (!empty($recordingFrom) && !empty($recordingTo)) {
+        try {
+        // Calculate day difference 
+        $from_timestamp = strtotime($recordingFrom);
+        $to_timestamp = strtotime($recordingTo);
+        $difference_in_seconds = $to_timestamp - $from_timestamp;
+        $difference_in_days = $difference_in_seconds / 86400;
+        $difference_in_days = round($difference_in_days) . ' Days' ;
+       
+    } catch (Exception $e) {
+        // echo 'Error: ' . $e->getMessage(); // Handle any DateTime parsing exceptions here
+    }
+}
+
+
+
+
+?>
+                            <td><?php echo $difference_in_days ; ?></td>
                             <td><?php echo $row['Project']; ?></td>
                             <td style="text-align:center;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"

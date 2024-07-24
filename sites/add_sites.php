@@ -156,19 +156,6 @@
       
 </div>
 
-<div class="row div1">
-    
-    <div  class="col-md-4"><label>ATMID_3</label></div>
-     <div  class="col-md-8"> <input class="form-control form-control-sm mb-3" type="text" name="AddSite_ATMID_3" id="AddSite_ATMID_3" value="-" /></div>
-      
-</div>
-
-<div class="row div1">
-    
-    <div  class="col-md-4"><label>ATMID_4</label></div>
-     <div  class="col-md-8">  <input class="form-control form-control-sm mb-3" type="text" name="AddSite_ATMID_4" id="AddSite_ATMID_4" value="-" /></div>
-    
-</div>
 
 <div class="row div1">
      
@@ -240,7 +227,7 @@
 
 <div class="row div1">
     
-    <div  class="col-md-4"><label>CTS Local Branch</label></div>
+    <div  class="col-md-4"><label>Local Branch</label></div>
      <div  class="col-md-8"> <select class="form-control form-control-sm mb-3"  name="AddSite_CtsLocalBranch" id="AddSite_CtsLocalBranch" >
      <option value="">Select</option>
    
@@ -403,7 +390,7 @@ $np = $maxfetch2[0] += 1;
 
 <div class="row div1">
      
-    <div  class="col-md-4"><label>GSM Number</label></div>
+    <div  class="col-md-4"><label>Two Way Number</label></div>
      <div  class="col-md-8"><input class="form-control form-control-sm mb-3" type="text" name="AddSite_GSM" id="AddSite_GSM" onkeypress="return isNumberKey(event)" maxlength="10" required></div>
       
 </div>
@@ -459,12 +446,12 @@ $np = $maxfetch2[0] += 1;
 
 <div class="row div1 ">
      
-    <div class="col-md-4"><label>SIM Owner</label></div>
+    <div class="col-md-4"><label>SIM Make</label></div>
      <div class="col-md-8">
        <select class="form-control form-control-sm mb-3" name="sim_owner" id="sim_owner"  required>
           <option value="">Select </option>
           <option value="CapitalSofts">CapitalSofts </option>
-          <option value="IFIBER">IFIBER</option>
+
       </select></div>
       
 </div>
@@ -571,20 +558,6 @@ $np = $maxfetch2[0] += 1;
 </div>
 
 <div class="row div1">
-    
-    <div  class="col-md-4"><label>ATMID_3</label></div>
-     <div  class="col-md-8"> <input class="form-control form-control-sm mb-3" type="text" name="AddDVR_ATMID_3" id="AddDVR_ATMID_3" value="-" /></div>
-      
-</div>
-
-<div class="row div1">
-    
-    <div  class="col-md-4"><label>ATMID_4</label></div>
-     <div  class="col-md-8">  <input class="form-control form-control-sm mb-3" type="text" name="AddDVR_ATMID_4" id="AddDVR_ATMID_4" value="-" /></div>
-    
-</div>
-
-<div class="row div1">
      
     <div  class="col-md-4"><label>OLD ATMID</label></div>
      <div  class="col-md-8"> <input class="form-control form-control-sm mb-3" type="text" name="old_atmid" id="old_atmid" /></div>
@@ -674,28 +647,7 @@ $np = $maxfetch2[0] += 1;
 
 
 
-<div class="row div1">
-    
-    <div  class="col-md-4"><label>CTS Local Branch</label></div>
-     <div  class="col-md-8"><input class="form-control form-control-sm mb-3" type="text" name="AddDVR_LocalBranch" id="AddDVR_LocalBranch" ></div>
-     
-</div>
 
-
-<div class="row div1">
-    
-    <div  class="col-md-4"><label>CTS BM Name</label></div>
-     <div  class="col-md-8"><input class="form-control form-control-sm mb-3" type="text" name="AddDVR_BM_Name" id="AddDVR_BM_Name" ></div>
-     
-</div>
-
-
-<div class="row div1">
-    
-    <div  class="col-md-4"><label>CTS BM Number</label></div>
-     <div  class="col-md-8"><input class="form-control form-control-sm mb-3" type="text" name="AddDVR_BM_Number" id="AddDVR_BM_Number" ></div>
-     
-</div>
 
 
 <div class="row div1">
@@ -788,12 +740,11 @@ $np = $maxfetch2[0] += 1;
 
 <div class="row div1 ">
      
-    <div class="col-md-4"><label>SIM Owner</label></div>
+    <div class="col-md-4"><label>SIM Make</label></div>
      <div class="col-md-8">
        <select class="form-control form-control-sm mb-3" name="sim_owner" id="sim_owner"  required>
           <option value="">Select </option>
           <option value="CapitalSofts">CapitalSofts </option>
-          <option value="IFIBER">IFIBER</option>
       </select></div>
       
 </div>
@@ -1391,12 +1342,12 @@ $np = $maxfetch2[0] += 1;
 
 <div class="row div1 ">
      
-    <div class="col-md-4"><label>SIM Owner</label></div>
+    <div class="col-md-4"><label>SIM Make</label></div>
      <div class="col-md-8">
        <select class="form-control form-control-sm mb-3" name="sim_owner" id="sim_owner"  required>
           <option value="">Select </option>
           <option value="CapitalSofts">CapitalSofts </option>
-          <option value="IFIBER">IFIBER</option>
+
       </select></div>
       
 </div>
@@ -1742,9 +1693,6 @@ $np = $maxfetch2[0] += 1;
                 var Customer = document.getElementById("Customer").value;
                 var Bank = document.getElementById("Bank").value;
                 var ATMID = document.getElementById("ATMID").value;
-                var CTSLocalBranch = document.getElementById("CTSLocalBranch").value;
-                var CTS_BM_Name = document.getElementById("CTS_BM_Name").value;
-                var CTS_BM_Number = document.getElementById("CTS_BM_Number").value;
                 var install_Status = document.getElementById("install_Status").value;
                 var Zone = document.getElementById("Zone").value;
                 var Password = document.getElementById("Password").value;
@@ -1768,15 +1716,6 @@ $np = $maxfetch2[0] += 1;
                     return false;
                 } else if (City == "") {
                     alert("please Select City");
-                    return false;
-                } else if (CTSLocalBranch == "") {
-                    alert("please fill up CTS Local Branch ");
-                    return false;
-                } else if (CTS_BM_Name == "") {
-                    alert("please fill up CTS BM Name ");
-                    return false;
-                } else if (CTS_BM_Number == "") {
-                    alert("please fill up CTS BM Number ");
                     return false;
                 } else if (install_Status == "") {
                     alert("please select Installation Status ");

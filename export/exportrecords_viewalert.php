@@ -25,16 +25,22 @@ $sqry = mysqli_query($con, $statement);
 // Create new Spreadsheet object
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
+$spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 
 
 $headerStyle = [
+    'font' => [
+        'size' => 10,
+        'bold' => true,
+        'color' => ['argb' => 'FFFFFFFF'],
+    ],
+    'alignment' => [
+        'horizontal' => Style\Alignment::HORIZONTAL_CENTER,
+        'vertical' => Style\Alignment::VERTICAL_CENTER,
+    ],
     'fill' => [
         'fillType' => Style\Fill::FILL_SOLID,
         'startColor' => ['argb' => 'FF4287f5'],
-    ],
-    'font' => [
-        'bold' => true,
-        'color' => ['argb' => 'FFFFFFFF'],
     ],
     'borders' => [
         'allBorders' => [
@@ -42,9 +48,16 @@ $headerStyle = [
         ],
     ],
 ];
-$sheet->getStyle('A1:U1')->applyFromArray($headerStyle);
+// $sheet->getStyle('A1:S1')->applyFromArray($headerStyle);
 
+$sheet->getColumnDimension('A')->setAutoSize(true);
+$sheet->getColumnDimension('B')->setAutoSize(true);
 
+$sheet->getStyle('A:S')->getAlignment()->setHorizontal('center');
+
+foreach (range('A', $sheet->getHighestColumn()) as $col) {
+    $sheet->getColumnDimension($col)->setAutoSize(true);
+ }
 
 $sheet->setCellValue('A1', 'Sr No');
 $sheet->setCellValue('B1', 'Client');
@@ -101,6 +114,19 @@ while ($rowarr = mysqli_fetch_array($sqry)) {
     }
 
 
+    $receivedTime = strtotime($rowarr["receivedtime"]);
+    $closedTime = strtotime($rowarr["closedtime"]);
+    
+    $durationFormatted = '-';
+    if ($receivedTime !== false && $closedTime !== false) {
+        $durationSeconds = $closedTime - $receivedTime;
+        $hours = floor($durationSeconds / 3600); 
+        $minutes = floor(($durationSeconds % 3600) / 60); 
+        $durationFormatted = sprintf('%02d:%02d', $hours, $minutes);    
+    } 
+
+
+
     $sheet->setCellValue('A' . $row, $row - 1);
     $sheet->setCellValue('B' . $row, $rowarr["Customer"]);
     $sheet->setCellValue('C' . $row, $rowarr["ATMID"]);
@@ -117,7 +143,7 @@ while ($rowarr = mysqli_fetch_array($sqry)) {
     $sheet->setCellValue('L' . $row, $rowarr["receivedtime"]);
 
     $sheet->setCellValue('M' . $row, $rowarr["closedtime"]);
-    $sheet->setCellValue('N' . $row, 'Duration');
+    $sheet->setCellValue('N' . $row, $durationFormatted);
     $sheet->setCellValue('O' . $row, $rowarr["DVRIP"]);
 
     if (endsWith($rowarr["alarm"], "R")) {
@@ -129,27 +155,24 @@ while ($rowarr = mysqli_fetch_array($sqry)) {
     $sheet->setCellValue('P' . $row, $re);
     
 
-    $cm = $rowarr["closedtime"] . '*' . $rowarr["comment"] . '*' . $rowarr["closedBy"];
+    $cm = $rowarr["closedtime"] . '*' . $rowarr["comment"] ;
     $sheet->setCellValue('Q' . $row, $cm);
 
     $sheet->setCellValue('R' . $row, $rowarr['id']);
     $sheet->setCellValue('S' . $row, $rowarr["closedBy"]);
 
-
-
-
-    
-
-    // $sheet->setCellValue('J' . $row, $ds);
-    // $sheet->setCellValue('M' . $row, $newDate);
-    // $sheet->setCellValue('O' . $row, $rowarr["Panel_make"]);
-    // $sheet->setCellValue('Q' . $row, $rowarr["Bank"]);
-
-
-
-
     $row++;
 }
+
+foreach ($sheet->getColumnIterator() as $column) {
+    $sheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
+ }
+
+ 
+// foreach (range('A', $sheet->getHighestColumn()) as $col) {
+//    $sheet->getColumnDimension($col)->setAutoSize(true);
+// }
+
 
 
 // Apply borders to all cells
@@ -164,13 +187,7 @@ $highestRow = $sheet->getHighestRow();
 $highestColumn = $sheet->getHighestColumn();
 $sheet->getStyle('A1:' . $highestColumn . $highestRow)->applyFromArray($styleArray);
 
-// // Set auto width for all columns
-// foreach (range('A', $highestColumn) as $column) {
-//     $sheet->getColumnDimension($column)->setAutoSize(true);
-// }
 
-
-// return ; 
 // Set headers for download
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment;filename="exported_data.xlsx"');

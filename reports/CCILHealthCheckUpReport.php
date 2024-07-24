@@ -3,7 +3,7 @@
 <div class="page-content">
     <?php
 
-    $customer = '';
+    $customer = 'CCIL';
     $atmid = '';
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -361,10 +361,9 @@ LEFT JOIN
     if (!empty($_REQUEST['dvrip'])) {
         $abc .= " AND d.IPAddress LIKE '%" . $_REQUEST['dvrip'] . "%'";
     }
-    if (!empty($_REQUEST['customer'])) {
-        $abc .= " AND d.customer LIKE '%" . $_REQUEST['customer'] . "%'";
-    }
 
+    $abc .= " AND d.customer LIKE '%" . $customer . "%'";
+    
 
     // Query to get total records count
     $sqlCount = mysqli_query($con, $abc);

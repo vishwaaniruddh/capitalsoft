@@ -278,7 +278,9 @@
 
     $vendor = "CapitalSoft";
 
-    $upssql = "SELECT s.ATMID,s.customer,s.bank,s.SiteAddress,s.city,s.state,s.Panel_Make,p.eb_power_failure_alert_received_dt,p.ups_power_available_alert_dt,p.ups_power_failure_alert_received_dt,p.eb_power_available_alert_dt,p.comments FROM `sites` s, power_ups_report p where s.ATMID = p.ATMID ";
+    $upssql = "SELECT s.ATMID,s.customer,s.bank,s.SiteAddress,s.city,s.state,s.Panel_Make,
+    p.eb_power_failure_alert_received_dt,p.ups_power_available_alert_dt,p.ups_power_failure_alert_received_dt,
+    p.eb_power_available_alert_dt,p.comments FROM `sites` s, power_ups_report p where s.ATMID = p.ATMID ";
 
     if ($atmid != '') {
         $upssql .= "and s.ATMID = '" . $atmid . "'";

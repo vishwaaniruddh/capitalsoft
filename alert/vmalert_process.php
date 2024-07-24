@@ -186,7 +186,7 @@ $result = mysqli_query($con, $abc);
 
     <h6 class="mb-0 text-uppercase">Total Records : <?php echo $total_records; ?> </h6>
 
-    <form action="./exportrecords_viewalert.php">
+    <form action="../export/exportrecords_viewalert.php">
         <input type="hidden" name="exportsql" value="<?php echo $withoutLimitsql; ?>">
         <button type="submit" class="btn btn-outline-info btn-sm px-5 radius-30"><i
                 class="bx bx-cloud-download mr-1"></i>Export</button>

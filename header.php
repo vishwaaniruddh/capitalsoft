@@ -89,8 +89,14 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 		button {
 			text-transform: uppercase;
 		}
-		td{
-			white-space:nowrap;
+
+		td {
+			white-space: nowrap;
+		}
+
+		th,
+		td {
+			text-align: center;
 		}
 	</style>
 
@@ -240,8 +246,8 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 						<li> <a href="<?php echo $base_url . $folder . 'panel/allpanel.php'; ?>"><i
 									class='bx bx-radio-circle'></i>All Panel</a>
 						</li>
-						<li> <a href="<?php echo $base_url . $folder . 'panel/panelDetail.php'; ?>"><i
-									class='bx bx-radio-circle'></i>Panel Details</a>
+						<li> <a href="<?php echo $base_url . $folder . 'panel/zoneDetail.php'; ?>"><i
+									class='bx bx-radio-circle'></i>Zone Details</a>
 						</li>
 					</ul>
 				</li>
@@ -259,9 +265,7 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 						<li> <a href="<?php echo $base_url . $folder . 'reports/cams_report.php'; ?>"><i
 									class='bx bx-radio-circle'></i>Cams</a>
 						</li>
-						<li> <a href="<?php echo $base_url . $folder . 'reports/chestdoor_report.php'; ?>"><i
-									class='bx bx-radio-circle'></i>ChestDoor</a>
-						</li>
+
 						<li> <a href="<?php echo $base_url . $folder . 'reports/health_check_report.php'; ?>"><i
 									class='bx bx-radio-circle'></i>Health Check</a>
 						</li>
@@ -297,6 +301,10 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 						<li>
 							<a href="<?php echo $base_url . $folder . 'reports/alldvr.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> DVRHealth Report </a>
+						</li>
+						<li>
+							<a href="<?php echo $base_url . $folder . 'reports/panelHeartBeatReport.php'; ?>">
+								<i class="bx bx-radio-circle"> </i> Panel Heartbeat Report </a>
 						</li>
 						<li>
 							<a href="<?php echo $base_url . $folder . 'reports/viewalert.php'; ?>">
@@ -369,28 +377,29 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 								<i class="bx bx-radio-circle"> </i> Health Check Up </a>
 						</li>
 						<li>
-							<a href="CAMS_UPSReport.html">
+							<a href="<?php echo $base_url . $folder . 'reports/CAMS_UPSReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> CAMS UPS Report </a>
 						</li>
 						<li>
-						<a href="<?php echo $base_url . $folder . 'reports/CCILHealthCheckUpReport.php'; ?>">
+							<a href="<?php echo $base_url . $folder . 'reports/CCILHealthCheckUpReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> CCILHealth Check Up </a>
 						</li>
 						<li>
-						<a href="<?php echo $base_url . $folder . 'reports/India1HealthCheckUpReport.php'; ?>">
+							<a href="<?php echo $base_url . $folder . 'reports/India1HealthCheckUpReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> India 1 Health Check Up </a>
 						</li>
 						<li>
-						<a href="<?php echo $base_url . $folder . 'reports/AxisHealthCheckUpReport.php'; ?>">
+							<a href="<?php echo $base_url . $folder . 'reports/AxisHealthCheckUpReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> Axis Health Check Up </a>
 						</li>
 						<li>
-						<a href="<?php echo $base_url . $folder . 'reports/KJSBHealthCheckUpReport.php'; ?>">
+							<a href="<?php echo $base_url . $folder . 'reports/KJSBHealthCheckUpReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> KJSB Health Check Up </a>
 						</li>
 						<li>
-						
-						<a href="<?php echo $base_url . $folder . 'reports/WriterSafeGuardHealthCheckUpReport.php'; ?>">
+
+							<a
+								href="<?php echo $base_url . $folder . 'reports/WriterSafeGuardHealthCheckUpReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> Writer SafeGuard Health Check Up </a>
 						</li>
 						<!-- <li>
@@ -414,8 +423,8 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 								<i class="bx bx-radio-circle"> </i> Sbi Hitachi Health CheckUp </a>
 						</li> -->
 						<li>
-						<a href="<?php echo $base_url . $folder . 'reports/CNSHealthCheckUpReport.php'; ?>">
-							
+							<a href="<?php echo $base_url . $folder . 'reports/CNSHealthCheckUpReport.php'; ?>">
+
 								<i class="bx bx-radio-circle"> </i> CNS Health CheckUp </a>
 						</li>
 						<li>

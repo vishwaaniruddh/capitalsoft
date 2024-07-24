@@ -425,7 +425,6 @@ LEFT JOIN
                         $query = "SELECT ATMID FROM sites WHERE Customer = '$selected_customer'";
                         $selected_customer = mysqli_query($con, $query);
                         // echo '<option> Select </option>';
-
                         if ($selected_customer) {
                             while ($customerrow = mysqli_fetch_assoc($selected_customer)) {
                                 $selected = ($atmid == $customerrow['ATMID']) ? 'selected' : '';

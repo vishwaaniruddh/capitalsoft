@@ -245,7 +245,9 @@ $panelid = $_GET['panelid'];
 
 $agency = "CapitalSoft";
 
-$chestdoorsql = "SELECT s.NewPanelID,s.ATMID,s.customer,s.bank,s.SiteAddress,s.city,s.state,s.Panel_Make,a.zone,a.alerttype,a.createtime,a.receivedtime,a.closedtime,a.status,a.alarm FROM `sites` s join alerts a on s.NewPanelID = a.panelid where a.alerttype like '%chest%'  ";
+$chestdoorsql = "SELECT s.NewPanelID,s.ATMID,s.customer,s.bank,s.SiteAddress,s.city,s.state,s.Panel_Make,
+a.zone,a.alerttype,a.createtime,a.receivedtime,a.closedtime,a.status,a.alarm FROM `sites` s join alerts a 
+on s.NewPanelID = a.panelid where a.alerttype like '%chest%'  ";
 
 if ($panelid != '') {
     $chestdoorsql .= "and a.panelid = '" . $panelid . "'";

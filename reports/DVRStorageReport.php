@@ -1,4 +1,11 @@
-<?php include ('../header.php'); ?>
+<?php include ('../header.php');
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
+
+
+?>
 
 
 <style>
@@ -429,29 +436,74 @@ END AS 'Recording To',
                     $i = ($page - 1) * $records_per_page + 1;
                     while ($row = mysqli_fetch_array($result)) {
 
-                        $recordingFrom = $row['Recording From'];
-                        $recordingTo = $row['Recording To'];
+                        // $recordingFrom = $row['Recording From'];
+                        // $recordingTo = $row['Recording To'];
 
-                        $datetime1 = new DateTime($recordingFrom);
-                        $datetime2 = new DateTime($recordingTo);
+                        // $datetime1 = new DateTime($recordingFrom);
+                        // $datetime2 = new DateTime($recordingTo);
                         
-                        // Calculate the difference between two DateTime objects
-                        $difference = $datetime1->diff($datetime2);
+                        // // Calculate the difference between two DateTime objects
+                        // $difference = $datetime1->diff($datetime2);
                         
-                        // Format the difference into days, hours, and optionally minutes
-                        $days = $difference->days;
-                        $hours = $difference->h;
-                        $minutes = $difference->i;
+                        // // Format the difference into days, hours, and optionally minutes
+                        // $days = $difference->days;
+                        // $hours = $difference->h;
+                        // $minutes = $difference->i;
                         
-                        // Build the formatted string
-                        if ($days > 0) {
-                            $formattedDifference = "$days days ";
-                        }
-                        if ($hours > 0) {
-                            $formattedDifference .= "$hours hours ";
-                        }
-                        if ($minutes > 0) {
-                            $formattedDifference .= "$minutes minutes";
+                        // // Build the formatted string
+                        // if ($days > 0) {
+                        //     $formattedDifference = "$days days ";
+                        // }
+                        // if ($hours > 0) {
+                        //     $formattedDifference .= "$hours hours ";
+                        // }
+                        // if ($minutes > 0) {
+                        //     $formattedDifference .= "$minutes minutes";
+                        // }
+
+                        $recordingFrom = isset($row['Recording From']) ? $row['Recording From'] : '';
+                        $recordingTo = isset($row['Recording To']) ? $row['Recording To'] : '';
+
+
+
+                        $formattedDifference = '-';
+                        $difference_in_days = '-';
+
+                        if (!empty($recordingFrom) && !empty($recordingTo)) {
+                            try {
+                                // Calculate day difference 
+                                $from_timestamp = strtotime($recordingFrom);
+                                $to_timestamp = strtotime($recordingTo);
+                                $difference_in_seconds = $to_timestamp - $from_timestamp;
+                                $difference_in_days = $difference_in_seconds / 86400;
+                                $difference_in_days = round($difference_in_days);
+                                // End
+                                $datetime1 = new DateTime($recordingFrom);
+                                $datetime2 = new DateTime($recordingTo);
+
+                                // Calculate the difference between two DateTime objects
+                                $difference = $datetime1->diff($datetime2);
+
+                                // Format the difference into days, hours, and optionally minutes
+                                $days = $difference->days;
+                                $hours = $difference->h;
+                                $minutes = $difference->i;
+
+                                // Build the formatted string
+                                if ($days > 0) {
+                                    $formattedDifference = "$days days ";
+                                }
+                                if ($hours > 0) {
+                                    $formattedDifference .= "$hours hours ";
+                                }
+                                if ($minutes > 0) {
+                                    $formattedDifference .= "$minutes minutes";
+                                }
+                            } catch (Exception $e) {
+                                // echo 'Error: ' . $e->getMessage(); // Handle any DateTime parsing exceptions here
+                            }
+                        } else {
+                            echo 'something in else';
                         }
 
 

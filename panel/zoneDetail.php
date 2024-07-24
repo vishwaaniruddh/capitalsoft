@@ -32,7 +32,7 @@ if (isset($_GET['panelName'])) {
 <div class="page-content">
 
     <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="mb-3">
-        <select name="panelName" id="panelName" class="form-control form-control-sm">
+        <select name="panelName" id="panelName" class="form-control form-control-sm" required>
             <option value="">Select</option>
             <?php
             // Fetch panel names from database

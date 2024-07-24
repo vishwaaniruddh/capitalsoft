@@ -70,7 +70,7 @@ WHERE b.Customer='" . $customer . "' and b.live='Y'
 
 
 	$query4 = "SELECT COUNT(CASE WHEN hdd IN ('Yes', 'Normal', 'ok') THEN 1 ELSE NULL END) AS working_count, 
-COUNT(CASE WHEN hdd IS NULL THEN 1 ELSE NULL END) AS not_working_count FROM all_dvr_live where customer='" . $customer . "'";
+COUNT(CASE WHEN hdd IS NULL THEN 1 ELSE NULL END) AS not_working_count FROM all_dvr_live where customer='" . $customer . "' and live='Y'";
 
 } else {
 	// $query = "select count(1) as count from sites where live='Y'";
