@@ -12,7 +12,7 @@ if (isset($_POST['customer'])) {
     }
 
     // Query to fetch ATMIDs for the selected customer
-    $query = "SELECT ATMID FROM $table WHERE Customer = '$customer'";
+    $query = "SELECT ATMID FROM $table WHERE Customer = '$customer' and live='Y'";
     $result = mysqli_query($con, $query);
 
     $isATMID = 0;

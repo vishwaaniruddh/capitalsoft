@@ -57,7 +57,8 @@ WHERE b.Customer='" . $customer . "' and b.live='Y'
 ";
 
 
-	$query4 = "SELECT COUNT(CASE WHEN a.hdd IN ('Yes', 'Normal', 'ok') THEN 1 ELSE NULL END) AS working_count, 
+	$query4 = "SELECT 
+	COUNT(CASE WHEN a.hdd IN ('Yes', 'Normal', 'ok') THEN 1 ELSE NULL END) AS working_count, 
 COUNT(CASE WHEN a.hdd IS NULL THEN 1 ELSE NULL END) AS not_working_count FROM all_dvr_live a INNER JOIN sites b ON a.atmid=b.ATMID AND b.live='Y' 
 where a.customer='" . $customer . "'";
 
@@ -115,8 +116,9 @@ INNER JOIN
 	WHERE b.live='Y'
 	";
 
-	$query4 = "SELECT COUNT(CASE WHEN a.hdd IN ('Yes', 'Normal', 'ok') THEN 1 ELSE NULL END) AS working_count, 
-COUNT(CASE WHEN a.hdd IS NULL THEN 1 ELSE NULL END) AS not_working_count FROM all_dvr_live a INNER JOIN sites b ON a.atmid= b.ATMID AND b.live='Y'" ;
+	$query4 = "SELECT COUNT(CASE WHEN a.hdd IN ('Yes', 'Normal', 'ok') AND a.login_status = 0 AND DATE(a.cdate) = CURDATE()  THEN 1 ELSE NULL END) AS working_count, 
+COUNT(CASE WHEN a.hdd NOT IN ('Yes', 'Normal', 'ok') THEN 1 ELSE NULL END) AS not_working_count FROM
+ all_dvr_live a INNER JOIN sites b ON a.atmid= b.ATMID AND b.live='Y'" ;
 
 }
 

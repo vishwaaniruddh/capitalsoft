@@ -16,6 +16,8 @@ include ('../header.php');
     $statement = "SELECT * from panel_health a INNER JOIN sites b ON a.atmid = b.ATMID AND b.live='Y' WHERE 1 ";
     // $statement = "SELECT * from panel_health_backup a INNER JOIN sites b ON a.atmid = b.ATMID WHERE 1 ";
     
+
+    // var_dump($_REQUEST) ; 
     // Apply filters
     if (!empty($_REQUEST['customer'])) {
         $customer = $_REQUEST['customer'];
@@ -34,7 +36,7 @@ include ('../header.php');
     // Append conditions for selected month and year
     $statement .= "AND MONTH(b.live_date) = $currentMonth AND YEAR(b.live_date) = $currentYear ";
 
-    $withoutLimitsql = $statement;
+ $withoutLimitsql = $statement;
     $sqlCount = mysqli_query($con, $statement);
     $total_records = mysqli_num_rows($sqlCount);
 

@@ -8,7 +8,6 @@ $offset = ($page - 1) * $records_per_page;
 
 $statement = "SELECT a.*,b.Customer,b.Zone,b.ATMID,b.ATMShortName,b.SiteAddress from alerts a INNER JOIN sites b ON a.panelid = b.NewPanelID AND b.live='Y' where a.alerttype like '%Temperature%' ";
 
-
 // Apply filters
 if (!empty($_REQUEST['customer'])) {
     $customer = $_REQUEST['customer'];

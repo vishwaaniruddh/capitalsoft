@@ -367,10 +367,6 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 							<a href="<?php echo $base_url . $folder . 'reports/tempretureReport.php'; ?>">
 								<i class="bx bx-radio-circle"> </i> Temperature Report </a>
 						</li>
-						<li>
-							<a href="PanelHeartBeatReport.html">
-								<i class="bx bx-radio-circle"> </i> Panel HeartBeat </a>
-						</li>
 
 						<li>
 							<a href="<?php echo $base_url . $folder . 'reports/HealthCheckUpReport.php'; ?>">
@@ -1116,5 +1112,5 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 			</div>
 		</header>
 		<!--end header -->
-		<!--start page wrapper -->
+		<!--start page wrapper 64424-->
 		<div class="page-wrapper">

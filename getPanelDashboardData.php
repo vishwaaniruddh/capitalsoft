@@ -20,6 +20,13 @@ if ($customer && $atmid) {
             .border-bottom {
                 border-bottom: 2px solid;
             }
+        #terminal {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
         </style>
 
         <div class="row">
@@ -122,10 +129,11 @@ if ($customer && $atmid) {
                         <table class="table" style="width:50%;">
                             <tbody>
                                 <tr>
+
                                     <td>
-                                        <input type="image" name="btnPing" id="btnPing" title="Ping"
-                                            src="<?php echo BASE_URL; ?>/assets/images/pingB.png" alt="Ping" align="left"
-                                            style="padding: 7px;">
+                                    <input type="image" name="btnPing" id="btnPing" data-ip="<?php echo htmlspecialchars($panelip); ?>" title="Ping"
+        src="<?php echo BASE_URL; ?>/assets/images/pingB.png" alt="Ping" align="left"
+        style="padding: 7px;">
 
                                     </td>
                                     <td>
@@ -214,10 +222,53 @@ if ($customer && $atmid) {
 
                             </tbody>
                         </table>
+
+                        
                     </div>
+                    <div id="terminal" style="overflow: auto; background-color: black; border: solid 2px; 
+                    min-height: 250px; line-height: 10px; color: white; font-size: 14px;
+                    padding: 5px;"></div>
                 </div>
             </div>
         </div>
+
+        <script>
+     
+     $(document).ready(function() {
+            $('#btnPing').click(function() {
+                var ip = $(this).data('ip'); // Get the IP address from data-ip attribute
+
+                // Clear terminal output
+                $('#terminal').html('');
+
+                // Display initial message
+                $('#terminal').append('<p>Pinging ' + ip + '...</p>');
+
+                // Create a new EventSource for streaming updates
+                var eventSource = new EventSource('./ajaxComponents/ping.php?ip=' + encodeURIComponent(ip));
+
+                // Event listener for messages from the server
+                eventSource.onmessage = function(event) {
+                    $('#terminal').append('<pre>' + event.data + '</pre>');
+                    // Scroll to bottom of terminal
+                    $('#terminal').scrollTop($('#terminal')[0].scrollHeight);
+                };
+
+                // // Event listener for errors
+                // eventSource.onerror = function(event) {
+                //     console.error('EventSource error:', event);
+                //     $('#terminal').append('<p>Error: Unable to ping ' + ip + '</p>');
+                //     // Scroll to bottom of terminal
+                //     $('#terminal').scrollTop($('#terminal')[0].scrollHeight);
+                //     eventSource.close(); // Close EventSource
+                // };
+
+                // Prevent default form submission
+                return false;
+            });
+        });
+    
+    </script>
         <?php
     }
     ?>

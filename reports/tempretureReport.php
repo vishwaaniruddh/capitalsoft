@@ -36,7 +36,7 @@
 			$('#loadingmessage').show(); // show the loading message.
 			$.ajax({
 				type: 'POST',
-				url: 'getTempretureData.php',
+				url: '../ajaxComponents/getTempretureData.php',
 				data: {
 					atmid: atmid,
 					customer: customer,

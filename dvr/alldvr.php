@@ -297,18 +297,17 @@ END AS 'Recording To',
 
 
       
-      FROM
-      all_dvr_live d
-      LEFT JOIN
-      sites s ON d.IPAddress = s.DVRIP
-    LEFT JOIN
-      dvronline o ON d.IPAddress = o.IPAddress  
-    LEFT JOIN
-      dvrsite ds ON d.IPAddress = ds.DVRIP   
-      WHERE
-        d.live = 'Y' 
-        AND 
-        s.live='Y'
+     
+  FROM
+  all_dvr_live d
+  LEFT JOIN
+  sites s ON d.IPAddress = s.DVRIP AND s.live='Y'
+LEFT JOIN
+  dvronline o ON d.IPAddress = o.IPAddress  
+LEFT JOIN
+  dvrsite ds ON d.IPAddress = ds.DVRIP AND ds.live='Y'
+  WHERE
+    d.live = 'Y' 
 
 		";
 

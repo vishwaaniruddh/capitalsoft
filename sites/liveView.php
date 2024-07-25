@@ -302,15 +302,14 @@ END AS 'Recording To',
   FROM
   all_dvr_live d
   LEFT JOIN
-  sites s ON d.IPAddress = s.DVRIP
+  sites s ON d.IPAddress = s.DVRIP AND s.live='Y'
 LEFT JOIN
   dvronline o ON d.IPAddress = o.IPAddress  
 LEFT JOIN
-  dvrsite ds ON d.IPAddress = ds.DVRIP   
+  dvrsite ds ON d.IPAddress = ds.DVRIP AND ds.live='Y'
   WHERE
     d.live = 'Y' 
-    and 
-    s.live='Y'
+    
 
     ";
 

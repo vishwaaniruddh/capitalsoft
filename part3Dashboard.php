@@ -14,7 +14,8 @@ $sqlBase = "SELECT a.*, b.Customer, b.ATMID
             WHERE 
             b.live = 'Y' AND 
             DATE(a.receivedtime) = CURDATE() 
-                AND a.sendtoclient = 'S'";
+                AND a.sendtoclient = 'S'"
+                ;
 
 if (!empty($customer)) {
     $sqlBase .= " AND b.Customer = '" . mysqli_real_escape_string($con, $customer) . "'";
@@ -25,7 +26,7 @@ $sqlBase .= " ORDER BY a.createtime DESC";
 $sqlCount = mysqli_query($con, $sqlBase);
 $total_records = mysqli_num_rows($sqlCount);
 
-echo $sqlPagination = $sqlBase . " LIMIT $offset, $records_per_page";
+$sqlPagination = $sqlBase . " LIMIT $offset, $records_per_page";
 $sql = mysqli_query($con, $sqlPagination);
 
 if (mysqli_num_rows($sql) > 0) {
