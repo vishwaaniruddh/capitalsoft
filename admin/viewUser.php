@@ -28,8 +28,9 @@
                 <tbody>
                     <?php
                     $i = 1;
-                    echo 'select e.name,e.lname,l.uname,l.pwd, e.mob1,l.user_status from employee e INNER JOIN loginusers l ON e.id = l.empid order by e.id ASC' ; 
-                    $citysql = mysqli_query($con, 'select e.name,e.lname,l.uname,l.pwd, e.mob1,l.user_status from employee e INNER JOIN loginusers l ON e.id = l.empid order by e.id ASC');
+                    // echo 'select e.name,e.lname,l.uname,l.pwd, e.mob1,l.user_status from employee e INNER JOIN loginusers l ON e.id = l.empid order by e.id ASC' ; 
+                    $citysql = mysqli_query($con, 'select l.id, e.name,e.lname,l.uname,l.pwd, e.mob1,l.user_status from employee e 
+                    INNER JOIN loginusers l ON e.id = l.empid order by e.id ASC');
                     while ($cityresult = mysqli_fetch_array($citysql)) {
 
                         $name = $cityresult['name'];
@@ -38,6 +39,7 @@
                         $pwd = $cityresult['pwd'];
                         $contact = $cityresult['mob1'];
                         $user_status = $cityresult['user_status'];
+                        $id = $cityresult['id'];
 
 
                         ?>
@@ -55,16 +57,14 @@
                             }
                             ?></td>
                             <td>
-                                <button type="button" class="text-primary" data-bs-toggle="modal" data-bs-target="#edituser"
-                                    id="edituserbutton" data-act="add" data-value="1"
-                                    style="color: #000;background-color: #e4eaec;border-color: #e4eaec;">
+                                <a href="./user_permission.php?userid=<?php echo $id ; ?>" type="button" class="text-primary" id="edituserbutton" 
+                                style="color: #000;background-color: #e4eaec;border-color: #e4eaec;">
                                     <i class="fadeIn animated bx bx-edit-alt"></i> &nbsp; Edit
-                                </button>
-
+                                </a>
                             </td>
                             <td>
-                                <button type="button" class="custom_button"  data-bs-toggle="modal" data-bs-target="#edituser"
-                                    id="edituserbutton" data-act="add" data-value="1"
+                                <button type="button" class="custom_button"  data-toggle="modal" data-target="#changeActivityStatus"
+                                    id="changeActivityStatus" data-act="add" data-value="1"
                                     style="color: #000;background-color: #e4eaec;border-color: #e4eaec;">
                                     <i class="fadeIn animated bx bx-trash-alt"></i> &nbsp; Make Inactive
                                 </button>
@@ -84,6 +84,31 @@
 
 
 </div>
+
+
+
+<div class="modal fade" id="edituser" tabindex="-1" aria-labelledby="ModalLabel" style="display: none;"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Edit - User</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" id="edituserform">
+                please wait ...
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <?php include ('../footer.php'); ?>
 
