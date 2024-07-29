@@ -394,7 +394,7 @@ LEFT JOIN
         <input type="hidden" name="Page" id="currentPage" value="<?php echo $page; ?>">
         <input type="hidden" name="perpg" id="perPage" value="<?php echo $records_per_page; ?>">
         <input type="button" onclick="submitForm(<?php echo $page; ?>, <?php echo $records_per_page; ?>);"
-            class="btn btn-primary px-5 rounded-0" value="Search">
+            class="badge bg-primary" value="Search">
     </form>
 
     <hr>

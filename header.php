@@ -23,8 +23,8 @@ if (!function_exists('verifyToken')) {
 if (verifyToken($token) != 1 || $token == 'NA') {
 
 	ob_start();
-	header('Location: /vertical/auth/login.php');
-	// header('Location: /capitalsoft/auth/login.php');
+	// header('Location: /vertical/auth/login.php');
+	header('Location: /capitalsoft/auth/login.php');
 	exit;
 }
 
@@ -97,8 +97,12 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 .badge{
 	border: none;
 	border-radius: 0;
+	padding: 9px;
 }
 
+.badge:empty {
+    display: block !important;
+}
 		button {
 			text-transform: uppercase;
 		}
@@ -138,7 +142,7 @@ if (verifyToken($token) != 1 || $token == 'NA') {
 					<div class="" style="text-align:right;">
 						<div class="btn-group">
 
-							<button type="button" class="btn btn-primary">Select Customer
+							<button type="button" class="badge">Select Customer
 								<?php echo $_REQUEST['customer'] ? '( ' . $_REQUEST['customer'] . ' )' : ''; ?>
 							</button>
 							<button type="button"

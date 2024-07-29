@@ -146,7 +146,7 @@
                     To Date:<input class="form-control form-control-sm mb-3" name="to" type="date" id="todate">
                 </div>
             </div>
-            <input class="btn btn-primary px-5 rounded-0" type="button" name="submit" onclick="a('','')"
+            <input class="badge bg-primary" type="button" name="submit" onclick="a('','')"
                 value="search"></button>
 
             <div id='loadingmessage' style='display:none;'>

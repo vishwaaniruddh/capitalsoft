@@ -2,8 +2,8 @@
 date_default_timezone_set('Asia/Kolkata');
 error_reporting(0);
 
-define('BASE_URL', 'http://192.168.0.27:8080/vertical/');
-// define('BASE_URL', 'http://localhost/capitalsoft/');
+// define('BASE_URL', 'http://192.168.0.27:8080/vertical/');
+define('BASE_URL', 'http://localhost/capitalsoft/');
 
 
 if ($_SERVER["HTTPS"] == "on") {
@@ -17,7 +17,7 @@ if ($_SERVER["HTTPS"] == "on") {
 
 
 $base_url = "http://192.168.0.27:8080/vertical/";
-// $base_url = "http://localhost/capitalsoft/";
+$base_url = "http://localhost/capitalsoft/";
 
 $host = "localhost";
 $user = "root";

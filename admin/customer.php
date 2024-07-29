@@ -12,13 +12,14 @@
         <div class="card-body">
             <form id="addcustomerForm">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col">
                         <label for="customer">Cutomer Name</label>
                         <input type="text" name="customer" id="customer" class="form-control form-control-sm mb-3" required>
                     </div>
 
-                    <div class="col-sm-3">
-                        <button type="submit" class="btn btn-primary px-5 rounded-0">Add Customer</button>
+                    <div class="col">
+                    <br>    
+                    <button type="submit" class="badge bg-primary">Add Customer</button>
                     </div>
                 </div>
             </form>
@@ -49,7 +50,7 @@
                             <td><?php echo $i; ?></td>
                             <td><?php echo $customer; ?></td>
                             <td>
-                                <button class="btn btn-danger btn-sm delete-customer"
+                                <button class="badge bg-danger delete-customer"
                                     data-customer-id="<?php echo $customersqlresult['id']; ?>">Delete</button>
                             </td>
                         </tr>

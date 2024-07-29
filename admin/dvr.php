@@ -12,13 +12,14 @@
         <div class="card-body">
             <form id="adddvrForm">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col">
                         <label for="dvr">DVR Name</label>
                         <input type="text" name="dvr" id="dvr" class="form-control form-control-sm mb-3" required>
                     </div>
 
-                    <div class="col-sm-3">
-                        <button type="submit" class="btn btn-primary px-5 rounded-0">Add dvr</button>
+                    <div class="col">
+                    <br>    
+                    <button type="submit" class="badge bg-primary">Add dvr</button>
                     </div>
                 </div>
             </form>
@@ -49,7 +50,7 @@
                             <td><?php echo $i; ?></td>
                             <td><?php echo $dvr; ?></td>
                             <td>
-                                <button class="btn btn-danger btn-sm delete-dvr"
+                                <button class="badge bg-danger delete-dvr"
                                     data-dvr-id="<?php echo $dvrsqlresult['id']; ?>">Delete</button>
                             </td>
                         </tr>

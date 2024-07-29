@@ -442,7 +442,11 @@ LEFT JOIN
             <div class="col">
                 <input type="hidden" name="Page" id="currentPage" value="<?php echo $page; ?>">
                 <input type="hidden" name="perpg" id="perPage" value="<?php echo $records_per_page; ?>">
-                <input type="button" onclick="submitForm(<?php echo $page; ?>, <?php echo $records_per_page; ?>);"
+                <!-- <input type="button" onclick="submitForm(<?php echo $page; ?>, <?php echo $records_per_page; ?>);" -->
+                    <!-- class="" value="Search"> -->
+
+                    <br>
+                <input type="button" class="badge bg-primary" onclick="submitForm(<?php echo $page; ?>, <?php echo $records_per_page; ?>);"
                     class="" value="Search">
                 <!-- <br>
                 <button type="button" class="badge bg-primary" id="submitForm" name="submit" onclick="submitForm()"

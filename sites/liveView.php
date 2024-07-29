@@ -394,7 +394,7 @@ LEFT JOIN
         <input type="hidden" name="Page" id="currentPage" value="<?php echo $page; ?>">
         <input type="hidden" name="perpg" id="perPage" value="<?php echo $records_per_page; ?>">
         <input type="button" onclick="submitForm(<?php echo $page; ?>, <?php echo $records_per_page; ?>);"
-            class="btn btn-primary px-5 rounded-0" value="Search">
+            class="badge bg-primary" value="Search">
     </form>
 
 
@@ -437,28 +437,28 @@ LEFT JOIN
                             <td><?php echo $ip; ?></td>
                             <td><?php echo $dvrName; ?></td>
                             <td>
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                <button type="button" class="badge bg-primary" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal" data-port="5040" data-camera="1"
                                     data-username="<?php echo htmlspecialchars($username); ?>"
                                     data-password="<?php echo htmlspecialchars($password); ?>"
                                     data-ip="<?php echo htmlspecialchars($ip); ?>"
                                     data-dvrname="<?php echo htmlspecialchars($dvrName); ?>"
                                     >Camera 1</button>
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                <button type="button" class="badge bg-primary" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal" data-port="5041" data-camera="2"
                                     data-username="<?php echo htmlspecialchars($username); ?>"
                                     data-password="<?php echo htmlspecialchars($password); ?>"
                                     data-ip="<?php echo htmlspecialchars($ip); ?>"
                                     data-dvrname="<?php echo htmlspecialchars($dvrName); ?>"
                                     >Camera 2</button>
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                <button type="button" class="badge bg-primary" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal" data-port="5042" data-camera="3"
                                     data-username="<?php echo htmlspecialchars($username); ?>"
                                     data-password="<?php echo htmlspecialchars($password); ?>"
                                     data-ip="<?php echo htmlspecialchars($ip); ?>" 
                                     data-dvrname="<?php echo htmlspecialchars($dvrName); ?>"
                                     >Camera 3</button>
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                <button type="button" class="badge bg-primary" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal" data-port="5043" data-camera="4"
                                     data-username="<?php echo htmlspecialchars($username); ?>"
                                     data-password="<?php echo htmlspecialchars($password); ?>"
@@ -466,7 +466,7 @@ LEFT JOIN
                                     data-dvrname="<?php echo htmlspecialchars($dvrName); ?>"
                                     >Camera 4</button>
 
-                                <button type="button" class="btn btn-primary btn-sm show-all-btn" data-bs-toggle="modal"
+                                <button type="button" class="badge bg-primary show-all-btn" data-bs-toggle="modal"
                                     data-bs-target="#showAllModal"
                                     data-username="<?php echo htmlspecialchars($username); ?>"
                                     data-password="<?php echo htmlspecialchars($password); ?>"

@@ -133,7 +133,7 @@
 
                 </div>
                 <div class="col-sm-12">
-                    <input class="btn btn-primary px-5 rounded-0" type="button" name="submit" onclick="a('','')"
+                    <input class="badge bg-primary" type="button" name="submit" onclick="a('','')"
                         value="search"></button>
                 </div>
             </div>

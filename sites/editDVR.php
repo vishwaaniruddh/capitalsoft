@@ -898,7 +898,7 @@
         <div class="row" style="margin-top:30px;">
             <div class="col-md-3"></div>
             <div class="col-md-3">
-                <center> <input class="btn btn-primary px-5 rounded-0" type="submit" name="sub" value="Update" /></center>
+                <center> <input class="badge bg-primary" type="submit" name="sub" value="Update" /></center>
             </div>
 
             <!--<div id="onlysave" class="col-md-3" align="right"><input type="button" name="save" value="save Changes" onclick="abc()" /></div>-->

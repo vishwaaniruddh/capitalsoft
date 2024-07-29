@@ -12,11 +12,11 @@
     <div class="card-body">
         <form id="addCityForm">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col">
                     <label for="city">Add City</label>
                     <input type="text" name="city" id="city" class="form-control form-control-sm mb-3" required>
                 </div>
-                <div class="col-sm-6">
+                <div class="col">
                     <label for="state">Select State</label>
                     <select name="state" id="state" class="form-control form-control-sm mb-3" required>
                         <option value="">Select</option>
@@ -32,8 +32,9 @@
                         ?>
                     </select>
                 </div>
-                <div class="col-sm-3">
-                    <button type="submit" class="btn btn-primary px-5 rounded-0">Add City</button>
+                <div class="col">
+                <br>        
+                <button type="submit" class="badge bg-primary">Add City</button>
                 </div>
             </div>
         </form>
@@ -67,7 +68,7 @@
                     <td><?php echo $city; ?></td>
                     <td><?php echo $state; ?></td>
                     <td>
-                        <button class="btn btn-danger btn-sm delete-city" data-city-id="<?php echo $cityresult['city_id']; ?>">Delete</button>
+                        <button class="badge bg-danger delete-city" data-city-id="<?php echo $cityresult['city_id']; ?>">Delete</button>
                     </td>
                 </tr>
                 <?php

@@ -317,7 +317,8 @@
             </div>
 
             <div class="col-sm-3">
-                <input type="button" class="btn btn-primary px-5 rounded-0" id="submitForm" name="submit"
+                <br>
+                <input type="button" class="badge bg-primary" id="submitForm" name="submit"
                     onclick="a('','')" value="search"></button>
 
             </div>

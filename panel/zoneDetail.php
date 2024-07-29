@@ -44,7 +44,7 @@ if (isset($_GET['panelName'])) {
             }
             ?>
         </select>
-        <button type="submit" class="btn btn-primary mt-2">Show Data</button>
+        <button type="submit" class="badge bg-primary">Show Data</button>
     </form>
 
     <?php if (!empty($selectedPanel) && !empty($data)) : ?>

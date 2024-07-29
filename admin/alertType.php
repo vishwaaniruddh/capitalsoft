@@ -12,12 +12,12 @@
         <div class="card-body">
             <form id="addalerttypeForm">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col">
                         <label for="alerttype">Add alerttype</label>
                         <input type="text" name="alerttype" id="alerttype" class="form-control form-control-sm mb-3"
                             required>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col">
                         <label for="isCritical">Is Critical</label>
                         <select name="isCritical" id="isCritical" class="form-control form-control-sm mb-3">
                             <option value="">Select</option>
@@ -25,8 +25,9 @@
                             <option value="0">No</option>
                         </select>
                     </div>
-                    <div class="col-sm-3">
-                        <button type="submit" class="btn btn-primary px-5 rounded-0">Add alerttype</button>
+                    <div class="col">
+                    <br>    
+                    <button type="submit" class="badge bg-primary">Add alerttype</button>
                     </div>
                 </div>
             </form>

@@ -1409,8 +1409,8 @@ $np = $maxfetch2[0] += 1;
 
         <div class="row" style="margin-top:30px;">
             <div class="col">
-                <!-- <button type="button" class="btn btn-primary px-5 rounded-0">Primary</button> -->
-                <input class="btn btn-primary px-5 rounded-0" type="submit" name="sub" value="submit" />
+                <!-- <button type="button" class="badge bg-primary">Primary</button> -->
+                <input class="badge bg-primary" type="submit" name="sub" value="submit" />
             </div>
 
         </div>
